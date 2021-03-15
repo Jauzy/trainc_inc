@@ -1,12 +1,29 @@
 import React from "react"
-
 import Layout from '../components/Layout'
 
-const IndexPage = () => (
-  <Layout>
-    Home Page
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1986.7891311715052!2d105.70185997593885!3d-5.17133032776443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNcKwMTAnMTYuOCJTIDEwNcKwNDInMTAuNyJF!5e0!3m2!1sen!2sid!4v1615791710674!5m2!1sen!2sid" width="600" height="450" style={{border:'0'}} allowfullscreen="" loading="lazy"></iframe>
-  </Layout>
-)
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
+
+const IndexPage = () => {
+  return(
+    <Layout>
+      <div style={{margin:'3em 3em'}}>
+        <Grid container spacing={3}>
+          <Grid item md={6}>
+            <Typography variant='h1'>
+              Ini Judul
+            </Typography>
+          </Grid>
+          <Grid item md={6}>
+            <Button variant='contained' color='primary'>
+              Klik Saya!
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+    </Layout>
+  )
+}
 
 export default IndexPage
