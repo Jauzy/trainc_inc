@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import { navigateTo } from 'gatsby'
+import { navigate } from 'gatsby'
 
 import { firebaseAuth, firebaseDb } from '../../Firebase'
 
@@ -27,7 +27,7 @@ const retriveLoginUserData = (dispatch) => {
         const token = { uid: firebaseAuth.currentUser?.uid, data: result.val() }
         cookies.set('user', token)
         dispatch(finishReq({ user: result.val() }))
-        navigateTo('/user')
+        navigate('/user')
     })
 }
 
@@ -45,7 +45,7 @@ const registerNewUser = (dispatch, user) => {
         });
     }
     dispatch(finishReq())
-    navigateTo('/login')
+    navigate('/login')
 }
 
 export const updateUserData = (dispatch, { gender, date_of_birth, name }) => {
@@ -128,5 +128,5 @@ export const logout = (dispatch) => {
     cookies.remove('user', '/')
     firebaseAuth.signOut()
     dispatch(reset())
-    navigateTo('/login')
+    navigate('/user/login')
 }
