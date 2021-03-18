@@ -17,7 +17,7 @@ import { useRecoilState } from 'recoil'
 
 const Navbar = props => {
     const classes = useStyles();
-    const section = ['Articles', 'Parts']
+    const section = ['Register', 'Login']
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
 
     const handleToggleTheme = () => {
@@ -29,9 +29,9 @@ const Navbar = props => {
             <AppBar elevation={0} color='inherit' position='static'>
                 <Container>
                     <Toolbar>
-                        <Typography variant="h5" style={{ margin: '0 .5em' }}>
+                        <Typography variant="h5" style={{ margin: '0 .5em', marginRight:'auto' }}>
                             <Link to={`/`}
-                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}>BENGKEL•</Link>
+                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}>TRAIN•INC</Link>
                         </Typography>
                         {section.map(item => (
                             <Typography variant="h6" key={item} style={{ margin: '0 .5em' }}>
@@ -39,7 +39,7 @@ const Navbar = props => {
                                     style={{ color: 'inherit', textDecoration: 'none' }}>{item}</Link>
                             </Typography>
                         ))}
-                        <Tooltip style={{ marginLeft: 'auto' }} title='Toggle Light/Dark Theme'>
+                        <Tooltip style={{ marginLeft: '1em' }} title='Toggle Light/Dark Theme'>
                             <IconButton color="inherit" onClick={handleToggleTheme}>
                                 {!darkMode ? <LightIcon /> : <DarkIcon />}
                             </IconButton>
