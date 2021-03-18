@@ -17,7 +17,7 @@ import { useRecoilState } from 'recoil'
 
 const Navbar = props => {
     const classes = useStyles();
-    const section = ['Register', 'Login']
+    const section = [{name:'Login',uri:'/signIn'}]
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
 
     const handleToggleTheme = () => {
@@ -35,8 +35,8 @@ const Navbar = props => {
                         </Typography>
                         {section.map(item => (
                             <Typography variant="h6" key={item} style={{ margin: '0 .5em' }}>
-                                <Link to={`/${item.toLowerCase()}`}
-                                    style={{ color: 'inherit', textDecoration: 'none' }}>{item}</Link>
+                                <Link to={item.uri}
+                                    style={{ color: 'inherit', textDecoration: 'none' }}>{item.name}</Link>
                             </Typography>
                         ))}
                         <Tooltip style={{ marginLeft: '1em' }} title='Toggle Light/Dark Theme'>
