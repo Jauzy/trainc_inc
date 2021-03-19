@@ -26,7 +26,7 @@ import logo from "./Logo1.png"
 
 const cookies = new Cookies()
 
-const Navbar = ({ dispatch, user }) => {
+const Navbar = ({ dispatch, user, children, position, className }) => {
     const classes = useStyles();
     const section = [{name:'Login',uri:'/user/login'}]
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
@@ -46,13 +46,11 @@ const Navbar = ({ dispatch, user }) => {
 
     return (
         <div className={classes.root}>
-            <AppBar elevation={0} color='inherit' position='static'>
+            <AppBar elevation={1} color='inherit' className={className} position={position || 'static'}>
                 <Container>
                     <Toolbar>
-                        <Typography variant="h5" style={{ margin: '0 .5em', marginRight:'auto' }}>
                             <Link to={`/`}
-                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}><img width={"150px"} src={logo} /></Link>
-                        </Typography>
+                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold', marginRight:'auto' }}><img width={"120px"} src={logo} /></Link>
                         {section.map(item => (
                             <Typography variant="subtitle1" key={item} style={{ margin: '0 .5em', fontWeight:'bold' }}>
                                 <Link to={item.uri}
@@ -86,6 +84,7 @@ const Navbar = ({ dispatch, user }) => {
                     </Toolbar>
                 </Container>
             </AppBar>
+            {children}
         </div>
     );
 }

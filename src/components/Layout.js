@@ -25,11 +25,15 @@ const Layout = props => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar />
-      <main style={{ padding: '0em 0', ...props.style }}>
-        {children}
-      </main>
-      <Footer />
+        <Navbar />
+      <div style={{...props.styleRoot}}>
+        <main style={{ padding: '0em 0', ...props.style }}>
+          {children}
+        </main>
+        <div style={{...props.styleFooter}}>
+          <Footer />
+        </div>
+      </div>
     </ThemeProvider>
   )
 }
