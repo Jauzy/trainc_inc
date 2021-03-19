@@ -9,14 +9,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems'
-import { useRecoilValue } from 'recoil'
 import { createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 
 import Navbar from '../Navbar'
+import { useRecoilValue } from 'recoil'
 import { isDarkMode } from '../../../static/atoms/utils'
 
 const drawerWidth = 240;
-
 
 export default function Dashboard(props) {
     const darkMode = useRecoilValue(isDarkMode)

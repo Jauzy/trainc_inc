@@ -10,6 +10,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 export const mainListItems = (
     <div style={{marginLeft:'.5em'}}>
@@ -19,29 +20,35 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/user/dashboard')}>
+        <ListItem button onClick={() => navigate('/user/order')}>
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Pesan Tiket" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/user/dashboard')}>
+        <ListItem button onClick={() => navigate('/user/account')}>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Akun" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => navigate('/user/settings')}>
             <ListItemIcon>
                 <SettingsIcon />
             </ListItemIcon>
             <ListItemText primary="Pengaturan" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => navigate('/user/wallet')}>
             <ListItemIcon>
                 <AccountBalanceWalletIcon />
             </ListItemIcon>
             <ListItemText primary="Wallet" />
+        </ListItem>
+        <ListItem button onClick={() => navigate('/user/riwayat')}>
+            <ListItemIcon>
+                <MonetizationOnIcon />
+            </ListItemIcon>
+            <ListItemText primary="Riwayat Transaksi" />
         </ListItem>
     </div>
 );

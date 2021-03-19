@@ -45,10 +45,10 @@ export default function Wallet() {
   return (
     <Layout>
       <Grid container spacing={0} style={{ minHeight: '100vh', overflow: 'hidden' }}>
-        <Grid item md={9}>
+        <Grid item xs={12} lg={9}>
           <img src='https://images4.alphacoders.com/976/thumb-1920-976013.jpg' style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
         </Grid>
-        <Grid item md={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+        <Grid item xs={12} lg={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
           <div style={{ margin: 'auto' }}>
             <center><img src={image} style={{ maxWidth: '80%' }} /></center>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>

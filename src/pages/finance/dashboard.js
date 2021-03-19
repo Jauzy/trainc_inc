@@ -42,7 +42,7 @@ const Dashboard = (props) => {
     )
 
     return (
-        <Layout style={{overflowX:'hidden'}}>
+        <Layout style={{overflowX:'hidden', margin:'3em 0'}}>
             <SEO title='Dashboard Finance' />
             <Container>
                 <div style={{display:'flex', alignItems:'center'}}>

@@ -46,7 +46,7 @@ const Navbar = ({ dispatch, user, children, position, className }) => {
 
     return (
         <div className={classes.root}>
-            <AppBar elevation={1} color='inherit' className={className} position={position || 'static'}>
+            <AppBar elevation={0} color='inherit' className={className} position={position || 'static'}>
                 <Container>
                     <Toolbar>
                             <Link to={`/`}
