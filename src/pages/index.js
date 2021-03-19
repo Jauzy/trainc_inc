@@ -10,26 +10,36 @@ import Grid from '@material-ui/core/Grid'
 const IndexPage = () => {
   return(
     <Layout>
+      {/* carrousel */}
+      <Carrousel/>    
       <div style={{margin:'3em 3em'}}>
+        {/* bagian pesan tiket kereta */}
         <Grid container spacing={3}>
-          <Grid item xs={3}>
-              
+          <Grid item xs={1}>
           </Grid>
-          <Grid item xs={6}>
-            <Carrousel/>    
+          <Grid item xs={10}>
+            <Form/>
           </Grid>
-          <Grid item xs={3}>
-                
+          <Grid item xs={1}>        
           </Grid>
         </Grid>
-        <Grid>
-          
-          <Grid item xs={12}>
-            <Form/>    
-          </Grid>
-          
-        </Grid>
+        {/* bagian  deskripsi */}
+        
+      </div>
 
+      <div style={{margin:'3em 3em'}}>
+        <Grid container spacing={3}> 
+          <Grid item xs={1}>
+            </Grid>
+            <Grid item xs={10}>
+              <Typography variant="h6" gutterBottom>
+                Deskripsi
+              </Typography>
+              
+            </Grid>
+            <Grid item xs={1}>        
+          </Grid>
+        </Grid>
       </div>
     </Layout>
   )

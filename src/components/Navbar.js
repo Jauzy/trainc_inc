@@ -22,6 +22,8 @@ import { useRecoilState } from 'recoil'
 import { firebaseAuth } from '../../static/utils/Firebase'
 import { getUserData, logout as logoutFunc } from '../../static/utils/redux/Actions/user'
 
+import logo from "./Logo1.png"
+
 const cookies = new Cookies()
 
 const Navbar = ({ dispatch, user }) => {
@@ -49,7 +51,7 @@ const Navbar = ({ dispatch, user }) => {
                     <Toolbar>
                         <Typography variant="h5" style={{ margin: '0 .5em', marginRight:'auto' }}>
                             <Link to={`/`}
-                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}><img src={require('../components/images/logoTrain.png')} /></Link>
+                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}><img width={"150px"} src={logo} /></Link>
                         </Typography>
                         {section.map(item => (
                             <Typography variant="subtitle1" key={item} style={{ margin: '0 .5em', fontWeight:'bold' }}>
