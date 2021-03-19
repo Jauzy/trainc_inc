@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     img: {
         objectFit: 'cover',
-        height: 500,
+        height: 400,
         display: 'block',
         overflow: 'hidden',
         width: '100%',
