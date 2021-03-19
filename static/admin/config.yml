@@ -5,17 +5,85 @@ backend:
 media_folder: static/img
 public_folder: /img
 collections:
-  - name: 'stations'
-    label: 'Stasiun'
-    folder: 'static/stasiuns'
+  - name: 'vouchers'
+    label: 'Voucher'
+    folder: 'static/vouchers'
     create: true
     slug: 'index'
     media_folder: ''
     public_folder: ''
+    identifier_field: name
+    sortable_fields: ['nominal']
+    path: '{{name}}/index'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Nama Voucher', name: 'name', widget: 'string' }
+      - { label: 'Nominal', name: 'nominal', widget: 'number'}
+  - name: 'stations'
+    label: 'Stasiun'
+    folder: 'static/stasiuns'
+    create: true
+    media_folder: ''
+    public_folder: ''
+    summary: "{{name}} ({{city}})"
+    sortable_fields: ['name', 'city']
     path: '{{name}}/index'
     editor:
       preview: false
     fields:
       - { label: 'Nama Stasiun', name: 'name', widget: 'string' }
       - { label: 'Lintang ( Horizontal, Latitude )', name: 'latitude', widget: 'string' }
-      - { label: 'longitude ( Vertical, Longitude )', name: 'longitude', widget: 'string' }
+      - { label: 'Bujur ( Vertical, Longitude )', name: 'longitude', widget: 'string' }
+      - { label: 'Kota', name: 'city', widget: 'select', options: ['Bandung','Jakarta','Banten']}
+  - name: 'trains'
+    label: 'Kereta'
+    folder: 'static/keretas'
+    create: true
+    media_folder: ''
+    public_folder: ''
+    sortable_fields: ['class', 'name']
+    summary: "{{name}} Kelas {{class}}"
+    path: '{{name}}/index'
+    editor:
+      preview: false
+    fields:
+      - { label: 'Nama Kereta', name: 'name', widget: 'string' }
+      - { label: 'Jumlah Kursi', name: 'seat', widget: 'number' }
+      - { label: 'Kelas', name: 'class', widget: 'select', options: ['Ekonomi', 'Bisnis', 'Eksekutif'] }
+  - name: 'schedules'
+    label: 'Jadwal'
+    folder: 'static/jadwals'
+    create: true
+    sortable_fields: ['depart_station', 'destination_station', 'name','depart_day', 'time']
+    summary: "{{depart_station}} ke {{destination_station}} di Hari {{depart_day}} Jam {{time}}"
+    media_folder: ''
+    public_folder: ''
+    path: '{{depart_station}}_{{destination_station}}_{{depart_day}}_{{time}}/index'
+    editor:
+      preview: false
+    fields:
+      - { 
+          label: 'Stasiun Keberangkatan', 
+          name: 'depart_station', widget: 'relation', collection: 'stations',
+          search_fields: ['name'],
+          value_field: 'name',
+          display_fields: ['name'], required: true
+        }
+      - { 
+          label: 'Stasiun Tujuan', 
+          name: 'destination_station', widget: 'relation', collection: 'stations',
+          search_fields: ['name'],
+          value_field: 'name',
+          display_fields: ['name'], required: true
+        }
+      - { 
+          label: 'Kereta', 
+          name: 'train', widget: 'relation', collection: 'trains',
+          search_fields: ['name'],
+          value_field: 'name',
+          display_fields: ['name'],
+          required: true
+        }
+      - { label: 'Hari', name: 'depart_day', widget: 'select', options: ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'], required: true }
+      - { label: 'Waktu', name: 'time', widget: 'string', hint: 'Format Waktu Adalah HH:MM. Contoh: 19:30.', required: true}

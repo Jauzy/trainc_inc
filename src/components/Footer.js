@@ -16,14 +16,14 @@ const Footer = props => {
                         About Us
                     </Typography>
                     <Typography variant='h6'>
-                        Bengkel Pak Ali
+                        Train.Inc
                     </Typography>
                     <Typography variant='p' color='textSecondary'>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    Train.Inc adalah Aplikasi pemesanan tiket kereta api berbasis web yang dikhususkan untuk di Pulau Jawa. Kelebihan dari aplikasi ini adalah Anda bisa melakukan pembayaran menggunakan voucher. Train.Inc siap menemani liburan kalian.
                     </Typography>
-                    <Typography variant='p' color='textSecondary'>
+                    {/* <Typography variant='p' color='textSecondary'>
                         Alamat : SMK Assalam Bandung (Jalan Situ Tarate Jl. Cibaduyut Raya, Cangkuang Kulon, Kec. Dayeuhkolot, Kota Bandung, Jawa Barat 40265)
-                    </Typography>
+                    </Typography> */}
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <Typography variant='h6'>
@@ -41,14 +41,17 @@ const Footer = props => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <Typography variant='h6'>
-                        Credits
+                        Team
                     </Typography>
                     <Typography variant='' color='textSecondary'>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.
+                        M. Syafiq Yukinanda		  (1301183281)<br/>
+                        Khalifa Lyan Bohemianda	  (1301180195)<br/>
+                        M Abdurrahman Al Jauzy	  (1301184074)<br/>
+                        Khalisyahdini			  (1301180208)
                     </Typography>
-                    <Typography variant='subtitle1' style={{ fontWeight: 'bold' }}>
+                    {/* <Typography variant='subtitle1' style={{ fontWeight: 'bold' }}>
                         Alrights Reserved to Developer.
-                    </Typography>
+                    </Typography> */}
                 </Grid>
             </Grid>
         </Box>
