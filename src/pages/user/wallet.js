@@ -12,11 +12,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Layout from '../../components/Dashboard/Dashboard'
+import TableVoucherUser from '../../components/Dashboard/TableVoucherUser'
+import Container from '@material-ui/core/Container'
 
 import image from '../../images/wallet.svg'
 
 export default function Wallet() {
   const [open, setOpen] = React.useState(false);
+  const [openDetail, setOpenDetail] = React.useState(false);
   const [state, setState] = React.useState({
 
   })
@@ -29,6 +32,13 @@ export default function Wallet() {
     setOpen(false);
   };
 
+  const handleClickDetailOpen = () => {
+    setOpenDetail(true);
+  };
+
+  const handleDetailClose = () => {
+    setOpenDetail(false);
+  };
   const handleScan = data => {
     if (data) {
       setState({
@@ -64,7 +74,7 @@ export default function Wallet() {
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={() => handleClickDetailOpen()}>
                   Detail
                 </Button>
               </Grid>
@@ -94,6 +104,24 @@ export default function Wallet() {
             onScan={handleScan}
             style={{ width: '100%' }}
           />
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openDetail}
+        onClose={handleDetailClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth="lg"
+      >
+        <DialogContent>
+            <div style={{margin:'3em 0', width:'700px'} }>
+                
+                <Typography variant='h5' gutterBottom style={{fontWeight:'bold'}}>
+                    History Top Up
+                </Typography>
+                <TableVoucherUser />
+              
+            </div>
         </DialogContent>
       </Dialog>
     </Layout>
