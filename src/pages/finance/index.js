@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 
 import Table from '../../components/Table'
 import TableVoucher from '../../components/TableVoucher'
-import Layout from '../../components/Layout'
+import Layout from '../../components/Dashboard/Dashboard'
 import SEO from '../../components/Seo'
 
 import { isDarkMode } from '../../../static/atoms/utils'
@@ -69,7 +69,7 @@ const Dashboard = (props) => {
                     margin:'0em 3em'
                 }}
                 >
-                <Chart data={data} axes={axes} tooltip dark={darkMode} />
+                <Chart data={data} axes={axes} tooltip dark={!darkMode} />
             </div>
             <div style={{margin:'3em 0'}}>
                 <Container>

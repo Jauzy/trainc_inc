@@ -21,11 +21,11 @@ export default function Dashboard(props) {
     const darkMode = useRecoilValue(isDarkMode)
     let theme = createMuiTheme({
         palette: {
-            type: !darkMode ? 'light' : 'dark',
+            type: darkMode ? 'light':'dark',
             background: {
                 // EDF1F5
-                default: !darkMode ? '#FAFAFA' : '#0B1622',
-                paper: !darkMode ? '#FAFAFA' : '#151F2E'
+                default: darkMode ? '#FAFAFA':'#0B1622',
+                paper: darkMode ? '#FAFAFA':'#151F2E'
             }
         },
     });
@@ -81,7 +81,7 @@ export default function Dashboard(props) {
                 <CssBaseline />
                 <div style={{ width: '100%' }}>
                     <Navbar />
-                    <main className={classes.content}>
+                    <main className={classes.content} style={{paddingLeft:'5em', ...props.style}}>
                         {props.children}
                     </main>
                 </div>

@@ -1,10 +1,11 @@
 import firebase from 'gatsby-plugin-firebase'
 import {navigate} from 'gatsby'
+import {registerNewUserWithEmail} from './redux/Actions/user'
 
 export let firebaseAuth
 export let firebaseDb
 
-export const uiConfig = () => {
+export const uiConfig = (dispatch, role) => {
     return ({
         // Popup signin flow rather than redirect flow.
         signInFlow: 'popup',
@@ -13,12 +14,12 @@ export const uiConfig = () => {
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.FacebookAuthProvider.PROVIDER_ID,
             firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-            firebase.auth.EmailAuthProvider.PROVIDER_ID
+            firebase.auth.GithubAuthProvider.PROVIDER_ID
         ],
         callbacks: {
             // Avoid redirects after sign-in.
             signInSuccessWithAuthResult: () => {
-                navigate('/')
+                registerNewUserWithEmail(dispatch, role)
             }
         }
     })

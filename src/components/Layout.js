@@ -12,11 +12,11 @@ const Layout = props => {
   const { children } = props
   let theme = createMuiTheme({
     palette: {
-      type: !darkMode ? 'light' : 'dark',
+      type: darkMode ? 'light' : 'dark',
       background: {
         // EDF1F5
-        default: !darkMode ? '#FAFAFA' : '#0B1622',
-        paper: !darkMode ? '#FAFAFA' : '#151F2E'
+        default: darkMode ? '#FAFAFA' : '#0B1622',
+        paper: darkMode ? '#FAFAFA' : '#151F2E'
       }
     },
   });
@@ -26,11 +26,11 @@ const Layout = props => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
         <Navbar />
-      <div style={{...props.styleRoot}}>
-        <main style={{ padding: '0em 0', ...props.style }}>
+      <div style={{display:'flex', flexDirection:'column', minHeight:'100vh', ...props.styleRoot}}>
+        <main style={{ marginTop:'auto', padding: '0em 0',  }}>
           {children}
         </main>
-        <div style={{...props.styleFooter}}>
+        <div style={{marginTop:'auto', ...props.styleFooter}}>
           <Footer />
         </div>
       </div>

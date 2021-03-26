@@ -27,25 +27,47 @@ const retriveLoginUserData = (dispatch) => {
         const token = { uid: firebaseAuth.currentUser?.uid, data: result.val() }
         cookies.set('user', token)
         dispatch(finishReq({ user: result.val() }))
-        navigate('/user')
+        navigate(`/${result.val().role}`)
     })
 }
 
-const registerNewUser = (dispatch, user) => {
+export const registerNewUser = (dispatch, user, role) => {
     const userRef = firebaseDb.ref('users')
     if (!user) {
         userRef.child(firebaseAuth.currentUser?.uid).set({
             name: firebaseAuth.currentUser?.displayName,
-            email: firebaseAuth.currentUser?.email
+            email: firebaseAuth.currentUser?.email,
+            role
         });
     } else {
         userRef.child(firebaseAuth.currentUser?.uid).set({
             name: user.name,
-            email: user.email
+            email: user.email,
+            role
         });
     }
     dispatch(finishReq())
     navigate('/login')
+}
+
+export const registerNewUserWithEmail = (dispatch, role) => {
+    const userRef = firebaseDb.ref('users')
+    userRef.child(firebaseAuth.currentUser?.uid).on('value', result => {
+        if(!result.val()){
+            userRef.child(firebaseAuth.currentUser?.uid).set({
+                name: firebaseAuth.currentUser?.displayName,
+                email: firebaseAuth.currentUser?.email,
+                role
+            });
+            registerNewUserWithEmail(dispatch, role)
+        }   
+        else {
+            const token = { uid: firebaseAuth.currentUser?.uid, data: result.val() }
+            cookies.set('user', token)
+            dispatch(finishReq({ user: result.val() }))
+            navigate(`/${result.val().role}`)
+        }
+    })
 }
 
 export const updateUserData = (dispatch, { gender, date_of_birth, name }) => {
@@ -60,12 +82,12 @@ export const updateUserData = (dispatch, { gender, date_of_birth, name }) => {
     }
 }
 
-export const registerWithEmailPassword = (dispatch, { name, email, password }) => {
+export const registerWithEmailPassword = (dispatch, { name, email, password, role }) => {
     dispatch(enableLoading())
     try {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .then(() => {
-                registerNewUser(dispatch, { name, email })
+                registerNewUser(dispatch, { name, email }, role)
             })
             .catch((error) => {
                 dispatch(finishReq({ error: error.message }))
@@ -75,7 +97,7 @@ export const registerWithEmailPassword = (dispatch, { name, email, password }) =
     }
 }
 
-export const registerWithEmail = (dispatch) => {
+export const registerWithEmail = (dispatch, role) => {
     dispatch(enableLoading())
     try {
         const userRef = firebaseDb.ref('users')
@@ -83,7 +105,7 @@ export const registerWithEmail = (dispatch) => {
             if (result.val()) {
                 retriveLoginUserData(dispatch)
             } else {
-                registerNewUser(dispatch, null)
+                registerNewUser(dispatch, null, role)
             }
         })
     } catch (error) {
@@ -128,5 +150,5 @@ export const logout = (dispatch) => {
     cookies.remove('user', '/')
     firebaseAuth.signOut()
     dispatch(reset())
-    navigate('/user/login')
+    navigate('/login')
 }

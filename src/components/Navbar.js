@@ -22,13 +22,14 @@ import { useRecoilState } from 'recoil'
 import { firebaseAuth } from '../../static/utils/Firebase'
 import { getUserData, logout as logoutFunc } from '../../static/utils/redux/Actions/user'
 
-import logo from "./Logo1.png"
+import logoDark from "../images/logo-dark.png"
+import logoLight from "../images/logo-light.png"
 
 const cookies = new Cookies()
 
 const Navbar = ({ dispatch, user, children, position, className }) => {
     const classes = useStyles();
-    const section = [{name:'Login',uri:'/user/login'}]
+    const section = [{name:'Login',uri:'/login'}]
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
 
     const handleToggleTheme = () => {
@@ -50,7 +51,7 @@ const Navbar = ({ dispatch, user, children, position, className }) => {
                 <Container>
                     <Toolbar>
                             <Link to={`/`}
-                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold', marginRight:'auto' }}><img width={"120px"} src={logo} /></Link>
+                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold', marginRight:'auto' }}><img width={"120px"} src={darkMode?logoLight:logoDark} /></Link>
                         {section.map(item => (
                             <Typography variant="subtitle1" key={item} style={{ margin: '0 .5em', fontWeight:'bold' }}>
                                 <Link to={item.uri}

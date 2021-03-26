@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { uiConfig, firebaseAuth } from '../../../static/utils/Firebase'
-import { loginWithEmailPassword } from '../../../static/utils/redux/Actions/user'
+import { loginWithEmailPassword, registerWithEmailPassword } from '../../../static/utils/redux/Actions/user'
 import SEO from '../../components/Seo'
 import Layout from '../../components/Layout'
 
@@ -41,18 +41,18 @@ const useStyles = makeStyles((theme) => ({
 function SignIn({ dispatch, error }) {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        email: '', password: '',
+        email: '', password: '', name: ''
     })
 
     const onChange = e => {
         setState({ ...state, [e.target.id]: e.target.value })
     }
 
-    const onLoginWithPassword = () => loginWithEmailPassword(dispatch, { email: state.email, password: state.password })
+    const onLoginWithPassword = () => registerWithEmailPassword(dispatch, { email: state.email, password: state.password, name: state.name, role:"finance" })
 
     return (
         <Layout style={{margin:'4em 0'}}>
-            <SEO title='Login' />
+            <SEO title='Register Finance' />
             <Container component="main" maxWidth='md'>
                 <CssBaseline />
                 <div style={{display:'flex', alignItems:'center'}}>
@@ -61,17 +61,30 @@ function SignIn({ dispatch, error }) {
                     </Avatar>
                     <div style={{marginLeft:".5em"}}>
                         <Typography component="h1" variant="h5" style={{fontWeight:'bold'}}>
-                            Masuk
+                            Mendaftar
                         </Typography>
                         <Typography color='textSecondary' variant="caption" style={{fontWeight:'bold'}}>
-                            Sebagai User
+                            Sebagai Finance
                         </Typography>
                     </div>
                 </div>
                 <Grid container spacing={3} alignItems='center'>
                     <Grid item md={8}>
                         <div className={classes.paper}>
-                            <form className={classes.form} noValidate>
+                            <div className={classes.form}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    onChange={onChange}
+                                    value={state.name}
+                                    label="Nama Lengkap"
+                                    name="name"
+                                    autoComplete="name"
+                                    autoFocus
+                                />
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -98,10 +111,6 @@ function SignIn({ dispatch, error }) {
                                     id="password"
                                     autoComplete="current-password"
                                 />
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
-                                />
                                 <Button
                                     type="submit"
                                     fullWidth
@@ -110,28 +119,21 @@ function SignIn({ dispatch, error }) {
                                     className={classes.submit}
                                     onClick={onLoginWithPassword}
                                 >
-                                    Sign In
+                                    Mendaftar
                                 </Button>
-                                {error && <Typography variant='subtitle2' align='center' style={{ color: 'red', marginTop:'.5em' }}>
+                                {error && <Typography variant='subtitle2' align='center' style={{ color: 'red', marginTop:'.5em', marginBottom:'1em' }}>
                                     {error}
                                 </Typography>}
-                                <Grid container>
-                                    <Grid item xs>
-                                        <Link href="#" variant="body2">
-                                            Forgot password?
-                                </Link>
-                                    </Grid>
-                                    <Grid item>
-                                        <Link href="#" variant="body2">
-                                            {"Don't have an account? Sign Up"}
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-                            </form>
+                            </div>
                         </div>
                     </Grid>
                     <Grid item md={4}>
-                        <StyledFirebaseAuth uiConfig={uiConfig()} firebaseAuth={firebaseAuth} />
+                        <center>
+                            <Typography variant='caption' style={{fontWeight:'bold'}} color='textSecondary' >
+                                Atau Login Dengan
+                            </Typography>
+                        </center>
+                        <StyledFirebaseAuth uiConfig={uiConfig(dispatch, 'finance')} firebaseAuth={firebaseAuth} />
                     </Grid>
                 </Grid>
             </Container>

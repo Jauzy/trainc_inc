@@ -16,3 +16,31 @@ html {
     background: #2196F3;
     border-radius: 5px;
 }
+
+.skew-divider {
+    height: 50px;
+    width: 100%;
+    position: relative;
+}
+
+.skew-divider::before {
+    content: '';
+    position: absolute;
+    border-bottom: 100px solid var(--bg-color);
+    border-left: 100vw solid transparent;
+    top: -100px;
+}
+
+.skew-divider-secondary {
+    height: 50px;
+    width: 100%;
+    position: relative;
+}
+
+.skew-divider-secondary::before {
+    content: '';
+    position: absolute;
+    border-bottom: 100px solid var(--secondary-color);
+    border-left: 100vw solid transparent;
+    top: -50px;
+}

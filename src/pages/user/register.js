@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'gatsby';
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -15,10 +14,10 @@ import Container from '@material-ui/core/Container';
 
 import { connect } from 'react-redux'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { uiConfig, firebaseAuth } from '../../static/utils/Firebase'
-import { loginWithEmailPassword } from '../../static/utils/redux/Actions/user'
-import SEO from '../components/Seo'
-import Layout from '../components/Layout'
+import { uiConfig, firebaseAuth } from '../../../static/utils/Firebase'
+import { loginWithEmailPassword, registerWithEmailPassword } from '../../../static/utils/redux/Actions/user'
+import SEO from '../../components/Seo'
+import Layout from '../../components/Layout'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -42,14 +41,14 @@ const useStyles = makeStyles((theme) => ({
 function SignIn({ dispatch, error }) {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        email: '', password: '',
+        email: '', password: '', name: ''
     })
 
     const onChange = e => {
         setState({ ...state, [e.target.id]: e.target.value })
     }
 
-    const onLoginWithPassword = () => loginWithEmailPassword(dispatch, { email: state.email, password: state.password })
+    const onLoginWithPassword = () => registerWithEmailPassword(dispatch, { email: state.email, password: state.password, name: state.name, role:"user" })
 
     return (
         <Layout style={{margin:'4em 0'}}>
@@ -62,17 +61,30 @@ function SignIn({ dispatch, error }) {
                     </Avatar>
                     <div style={{marginLeft:".5em"}}>
                         <Typography component="h1" variant="h5" style={{fontWeight:'bold'}}>
-                            Masuk
+                            Mendaftar
                         </Typography>
                         <Typography color='textSecondary' variant="caption" style={{fontWeight:'bold'}}>
-                            Login untuk melanjutkan.
+                            Sebagai Customer
                         </Typography>
                     </div>
                 </div>
                 <Grid container spacing={3} alignItems='center'>
                     <Grid item md={8}>
                         <div className={classes.paper}>
-                            <div className={classes.form} noValidate>
+                            <div className={classes.form}>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    onChange={onChange}
+                                    value={state.name}
+                                    label="Nama Lengkap"
+                                    name="name"
+                                    autoComplete="name"
+                                    autoFocus
+                                />
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -99,10 +111,6 @@ function SignIn({ dispatch, error }) {
                                     id="password"
                                     autoComplete="current-password"
                                 />
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
-                                />
                                 <Button
                                     type="submit"
                                     fullWidth
@@ -111,23 +119,11 @@ function SignIn({ dispatch, error }) {
                                     className={classes.submit}
                                     onClick={onLoginWithPassword}
                                 >
-                                    Masuk
+                                    Mendaftar
                                 </Button>
-                                {error && <Typography variant='subtitle2' align='center' style={{ color: 'red', marginTop:'.5em' }}>
+                                {error && <Typography variant='subtitle2' align='center' style={{ color: 'red', marginTop:'.5em', marginBottom:'1em' }}>
                                     {error}
                                 </Typography>}
-                                <Grid container>
-                                    <Grid item xs>
-                                        <Link href="#" variant="body2">
-                                            Lupa password?
-                                </Link>
-                                    </Grid>
-                                    <Grid item>
-                                        <Link to='/user/register'>
-                                            {"Belum Punya Akun ? Mendaftar."}
-                                        </Link>
-                                    </Grid>
-                                </Grid>
                             </div>
                         </div>
                     </Grid>

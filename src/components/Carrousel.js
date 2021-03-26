@@ -14,23 +14,15 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const tutorialSteps = [
     {
         imgPath:
-        'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+        'https://cdn.discordapp.com/attachments/676020654360756254/824837608827650078/wallpaperflare.com_wallpaper.jpg',
     },
     {
         imgPath:
-        'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+        'https://www.pixel4k.com/wp-content/uploads/2018/09/train-railway-platform-wagon-4k_1538068776.jpg',
     },
     {
         imgPath:
-        'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-    },
-    {
-        imgPath:
-        'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-        imgPath:
-        'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+        'https://images.hdqwalls.com/wallpapers/train-anime-art-4k-yp.jpg',
     },
 ];
 
@@ -41,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     img: {
         objectFit: 'cover',
-        height: 400,
+        height: 500,
         display: 'block',
         overflow: 'hidden',
         width: '100%',
@@ -87,8 +79,6 @@ function SwipeableTextMobileStepper() {
         </AutoPlaySwipeableViews>
         <MobileStepper
             steps={maxSteps}
-            variant="dots"
-            steps={5}
             position="static"
             activeStep={activeStep}
             nextButton={
