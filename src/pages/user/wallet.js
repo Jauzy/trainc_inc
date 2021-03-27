@@ -6,14 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import QrReader from 'react-qr-reader'
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Layout from '../../components/Dashboard/Dashboard'
 import TableVoucherUser from '../../components/Dashboard/TableVoucherUser'
-import Container from '@material-ui/core/Container'
+import SEO from '../../components/Seo'
 
 import image from '../../images/wallet.svg'
 
@@ -54,9 +53,10 @@ export default function Wallet() {
 
   return (
     <Layout>
+      <SEO title='Wallet' />
       <Grid container spacing={0} style={{ minHeight: '100vh', overflow: 'hidden' }}>
         <Grid item xs={12} lg={9}>
-          <img src='https://images4.alphacoders.com/976/thumb-1920-976013.jpg' style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
+          <img src='https://images.hdqwalls.com/wallpapers/train-anime-art-4k-yp.jpg' style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
         </Grid>
         <Grid item xs={12} lg={3} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
           <div style={{ margin: 'auto' }}>

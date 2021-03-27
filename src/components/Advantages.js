@@ -1,5 +1,5 @@
 import React from 'react'
-import { navigateTo } from 'gatsby'
+import { navigate } from 'gatsby'
 
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -43,14 +43,16 @@ const Advantages = ({ firstRow, secondRow, svg, title1, title2 }) => {
                                     {item.desc}
                                 </Typography>
                                 <Button color='primary' variant='contained' startIcon={<SubdirectoryArrowRightIcon />}
-                                    onClick={() => navigateTo(item.url)} style={{ margin: '0.5em 0em', padding: '0.5em 3em' }}>{item.btnLabel}</Button>
+                                    onClick={() => navigate(item.url)} style={{ margin: '0.5em 0em', padding: '0.5em 3em' }}>{item.btnLabel}</Button>
                             </Grid>
                         ))}
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} >
                     <Parallax y={[50, -50]} tagOuter="div">
-                        <SVGIMG />
+                        <div style={{display:'flex', justifyContent:'center'}}>
+                            <SVGIMG />
+                        </div>
                     </Parallax>
                 </Grid>
             </Grid>

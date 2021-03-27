@@ -3,6 +3,7 @@ import { navigate } from 'gatsby'
 
 import { firebaseAuth, firebaseDb } from '../../Firebase'
 
+const defaultAvatar = 'https://i.pinimg.com/564x/89/99/d3/8999d3a5111ae9ddd22476c9d289f351.jpg'
 const cookies = new Cookies()
 //action type
 export const LOADING = 'USER_LOADING';
@@ -27,36 +28,33 @@ const retriveLoginUserData = (dispatch) => {
         const token = { uid: firebaseAuth.currentUser?.uid, data: result.val() }
         cookies.set('user', token)
         dispatch(finishReq({ user: result.val() }))
-        navigate(`/${result.val().role}`)
+        if(result.val().role != 'admin')
+            navigate(`/${result.val().role}`)
+        else navigate(`/admin/dashboard`)
     })
 }
 
 export const registerNewUser = (dispatch, user, role) => {
     const userRef = firebaseDb.ref('users')
-    if (!user) {
-        userRef.child(firebaseAuth.currentUser?.uid).set({
-            name: firebaseAuth.currentUser?.displayName,
-            email: firebaseAuth.currentUser?.email,
-            role
-        });
-    } else {
-        userRef.child(firebaseAuth.currentUser?.uid).set({
-            name: user.name,
-            email: user.email,
-            role
-        });
-    }
+    userRef.child(firebaseAuth.currentUser?.uid).set({
+        name: user.name,
+        email: user.email,
+        photoURL: defaultAvatar,
+        role
+    });
     dispatch(finishReq())
     navigate('/login')
 }
 
 export const registerNewUserWithEmail = (dispatch, role) => {
     const userRef = firebaseDb.ref('users')
+    console.log(firebaseAuth.currentUser)
     userRef.child(firebaseAuth.currentUser?.uid).on('value', result => {
         if(!result.val()){
             userRef.child(firebaseAuth.currentUser?.uid).set({
                 name: firebaseAuth.currentUser?.displayName,
                 email: firebaseAuth.currentUser?.email,
+                photoURL: firebaseAuth.currentUser?.photoURL || defaultAvatar,
                 role
             });
             registerNewUserWithEmail(dispatch, role)

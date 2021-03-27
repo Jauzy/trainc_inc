@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Train.Inc`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    author: `@al.zaujy`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -10,29 +10,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `keretas`,
-        path: `${__dirname}/static/keretas`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `stasiuns`,
-        path: `${__dirname}/static/stasiuns`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `jadwals`,
-        path: `${__dirname}/static/jadwals`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `vouchers`,
-        path: `${__dirname}/static/vouchers`,
+        name: `collections`,
+        path: `${__dirname}/static/collections`,
       },
     },
     `gatsby-transformer-sharp`,
