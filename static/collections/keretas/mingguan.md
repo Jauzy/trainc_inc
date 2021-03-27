@@ -1,6 +1,6 @@
 ---
 name: Mingguan
-seat: 120
+seat: 100
 class: Ekonomi
-type: stations
+type: trains
 ---

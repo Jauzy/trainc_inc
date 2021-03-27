@@ -48,9 +48,11 @@ const Advantages = ({ firstRow, secondRow, svg, title1, title2 }) => {
                         ))}
                     </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} >
                     <Parallax y={[50, -50]} tagOuter="div">
-                        <SVGIMG />
+                        <div style={{display:'flex', justifyContent:'center'}}>
+                            <SVGIMG />
+                        </div>
                     </Parallax>
                 </Grid>
             </Grid>
