@@ -26,7 +26,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Pesan Tiket" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/user/account')}>
+        <ListItem button onClick={() => navigate('/user/hasilpencarian')}>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
