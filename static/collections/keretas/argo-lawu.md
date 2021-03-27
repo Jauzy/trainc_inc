@@ -1,6 +1,6 @@
 ---
 name: Argo Lawu
-seat: 100
+seat: 120
 class: Eksekutif
-type: stations
+type: trains
 ---

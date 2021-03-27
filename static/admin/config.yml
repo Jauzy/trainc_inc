@@ -53,7 +53,7 @@ collections:
       - { label: 'Nama Kereta', name: 'name', widget: 'string' }
       - { label: 'Jumlah Kursi', name: 'seat', widget: 'number' }
       - { label: 'Kelas', name: 'class', widget: 'select', options: ['Ekonomi', 'Bisnis', 'Eksekutif'] }
-      - { label: 'type', name: 'type', widget: 'hidden', default: 'stations'}
+      - { label: 'type', name: 'type', widget: 'hidden', default: 'trains'}
   - name: 'schedules'
     label: 'Jadwal'
     folder: 'static/collections/jadwals'
@@ -90,4 +90,4 @@ collections:
         }
       - { label: 'Hari', name: 'depart_day', widget: 'select', options: ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'], required: true }
       - { label: 'Waktu', name: 'time', widget: 'string', hint: 'Format Waktu Adalah HH:MM. Contoh: 19:30.', required: true}
-      - { label: 'type', name: 'type', widget: 'hidden', default: 'stations'}
+      - { label: 'type', name: 'type', widget: 'hidden', default: 'schedules'}
