@@ -1,4 +1,5 @@
 import React from "react"
+import {graphql} from 'gatsby'
 import Layout from '../components/Layout'
 import Carrousel from '../components/Carrousel'
 import Form from '../components/Form'
@@ -13,7 +14,7 @@ import FastForwardIcon from '@material-ui/icons/FastForward';
 import PhonelinkIcon from '@material-ui/icons/Phonelink';
 
 
-const IndexPage = () => {
+const IndexPage = props => {
   return(
     <Layout>
       <SEO title='Home' />
@@ -24,7 +25,7 @@ const IndexPage = () => {
       </div>
       {/* carrousel */}
       <div style={{padding:'0em 5vw', marginBottom:'3em'}}>
-        <Form/>
+        <Form data={props.data.allMarkdownRemark.nodes} />
       </div>
       <Carrousel/>
     </Layout>
@@ -62,3 +63,17 @@ const secondRow = [
       url: '/user/wallet'
   }
 ]
+
+export const query = graphql`
+query MyQuery {
+  allMarkdownRemark(filter: {frontmatter: {type: {eq: "stations"}}}) {
+    nodes {
+      id
+      frontmatter {
+        name
+        city
+      }
+    }
+  }
+}
+`

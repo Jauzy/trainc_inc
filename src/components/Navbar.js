@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar'
 
 import IconButton from '@material-ui/core/IconButton';
 import DarkIcon from '@material-ui/icons/NightsStay'
@@ -19,7 +20,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { isDarkMode } from '../../static/atoms/utils'
 import { useRecoilState } from 'recoil'
 
-import { firebaseAuth } from '../../static/utils/Firebase'
 import { getUserData, logout as logoutFunc } from '../../static/utils/redux/Actions/user'
 
 import logoDark from "../images/logo-dark.png"
@@ -29,7 +29,7 @@ const cookies = new Cookies()
 
 const Navbar = ({ dispatch, user, children, position, className }) => {
     const classes = useStyles();
-    const section = [{name:'Login',uri:'/login'}]
+    const section = [{ name: 'Login', uri: '/login' }]
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
 
     const handleToggleTheme = () => {
@@ -50,16 +50,14 @@ const Navbar = ({ dispatch, user, children, position, className }) => {
             <AppBar elevation={0} color='inherit' className={className} position={position || 'static'}>
                 <Container>
                     <Toolbar>
-                            <Link to={`/`}
-                                style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold', marginRight:'auto' }}><img width={"120px"} src={darkMode?logoLight:logoDark} /></Link>
-                        {section.map(item => (
-                            <Typography variant="subtitle1" key={item} style={{ margin: '0 .5em', fontWeight:'bold' }}>
-                                <Link to={item.uri}
-                                    style={{ color: 'inherit', textDecoration: 'none' }}>{item.name}</Link>
-                            </Typography>
-                        ))}
-                        {user ? <div style={{ display: 'flex', justifyContent: 'stretch' }}>
-                            <Button color='primary' onClick={() => navigate('/user')}>
+                        <Link to={`/`} style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold', marginRight: 'auto' }}>
+                            <img width={"120px"} src={darkMode ? logoLight : logoDark} />
+                        </Link>
+
+                        {user ? <div style={{ display: 'flex', justifyContent: 'stretch', }}>
+                            <Button color='inherit' onClick={() => navigate(`/${user.role}`)} endIcon={
+                                <Avatar alt={user.name} src={user.photoURL} className={classes.small} />
+                            }>
                                 {user.name}
                             </Button>
                             <Tooltip style={{ marginLeft: '0em' }} title='Logout'>
@@ -67,17 +65,15 @@ const Navbar = ({ dispatch, user, children, position, className }) => {
                                     <ExitToAppIcon />
                                 </IconButton>
                             </Tooltip>
-                        </div> : (firebaseAuth.currentUser) && <div style={{ display: 'flex', justifyContent: 'stretch' }}>
-                            <Button color='' style={{fontWeight:'bold'}} onClick={() => navigate('/user')}>
-                                {firebaseAuth.currentUser.displayName}
-                            </Button>
-                            <Tooltip style={{ marginLeft: '0em' }} title='Logout'>
-                                <IconButton color="inherit" onClick={logout}>
-                                    <ExitToAppIcon />
-                                </IconButton>
-                            </Tooltip>
+                        </div> : <div>
+                            {section.map(item => (
+                                <Typography variant="subtitle1" key={item} style={{ margin: '0 .5em', fontWeight: 'bold' }}>
+                                    <Link to={item.uri}
+                                        style={{ color: 'inherit', textDecoration: 'none' }}>{item.name}</Link>
+                                </Typography>
+                            ))}
                         </div>}
-                        <Tooltip style={{ marginLeft: '1em' }} title='Toggle Light/Dark Theme'>
+                        <Tooltip style={{ marginLeft: '0em' }} title='Toggle Light/Dark Theme'>
                             <IconButton color="inherit" onClick={handleToggleTheme}>
                                 {!darkMode ? <LightIcon /> : <DarkIcon />}
                             </IconButton>
@@ -99,6 +95,10 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+    },
+    small: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
     },
 }));
 

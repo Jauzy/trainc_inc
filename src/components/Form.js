@@ -23,12 +23,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddressForm() {
+export default function AddressForm(props) {
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const [state, setState] = React.useState({
+        asal: '', tujuan: '', date: '', 
+    })
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    const handleChange = (event, id) => {
+        setState({...state, [id] : event.target.value});
     };
 
     const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
@@ -48,19 +50,14 @@ export default function AddressForm() {
                 <FormControl variant="filled" className={classes.formControl}>
                     <InputLabel id="demo-simple-select-filled-label">Stasiun Asal</InputLabel>
                     <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={age}
+                        value={state.asal}
                         fullWidth
-                        onChange={handleChange}
+                        onChange={event => handleChange(event, 'asal')}
                         required
                         >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {props.data?.map(item => (
+                            <MenuItem value={item.id}>{item.frontmatter.name}</MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
             </Grid>
@@ -68,19 +65,14 @@ export default function AddressForm() {
             <FormControl variant="filled" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-filled-label">Stasiun Tujuan</InputLabel>
                     <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={age}
+                        value={state.tujuan}
                         fullWidth
-                        onChange={handleChange}
+                        onChange={event => handleChange(event, 'tujuan')}
                         required
                         >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
+                        {props.data?.map(item => (
+                            <MenuItem value={item.id}>{item.frontmatter.name}</MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
             </Grid>

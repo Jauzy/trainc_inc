@@ -1,7 +1,8 @@
 ---
 depart_station: Merak
-destination_station: Manggarai
+destination_station: Bandung
 train: Mingguan
 depart_day: Minggu
-time: 18:00
+time: 08:30
+type: stations
 ---

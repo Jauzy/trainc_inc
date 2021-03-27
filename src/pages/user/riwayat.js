@@ -23,7 +23,7 @@ export default function Album() {
     heroContent: {
       //backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(8, 0, 6),
-      backgroundColor: darkMode ? '#2196F3' : '#E6F2FF'
+      backgroundColor: !darkMode ? '#2196F3' : '#E6F2FF'
     },
     heroButtons: {
       marginTop: theme.spacing(4),
@@ -35,7 +35,7 @@ export default function Album() {
     card: {
       display: 'flex',
       flexDirection: 'column',
-      backgroundColor: darkMode ? '#2196F3' : '#E6F2FF'
+      backgroundColor: !darkMode ? '#2196F3' : '#E6F2FF'
     },
     cardMedia: {
       paddingTop: '56.25%', // 16:9
