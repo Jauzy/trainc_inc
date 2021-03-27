@@ -30,25 +30,25 @@ export const mainListItems = (
 
 export const secondaryListItems = (
     <div style={{marginLeft:'.5em'}}>
-        <ListItem button onClick={() => navigate('/admin/dashboard/voucher')}>
+        <ListItem button onClick={() => navigate('/admin/voucher')}>
             <ListItemIcon>
                 <AccountBalanceWalletIcon />
             </ListItemIcon>
             <ListItemText primary="Voucher" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/admin/dashboard/station')}>
+        <ListItem button onClick={() => navigate('/admin/station')}>
             <ListItemIcon>
                 <EmojiTransportationIcon />
             </ListItemIcon>
             <ListItemText primary="Stasiun" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/admin/dashboard/train')}>
+        <ListItem button onClick={() => navigate('/admin/train')}>
             <ListItemIcon>
                 <TrainIcon />
             </ListItemIcon>
             <ListItemText primary="Kereta" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/admin/dashboard/schedule')}>
+        <ListItem button onClick={() => navigate('/admin/schedule')}>
             <ListItemIcon>
                 <EventIcon />
             </ListItemIcon>
