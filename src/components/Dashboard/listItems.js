@@ -20,13 +20,13 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/user/order')}>
+        <ListItem button onClick={() => navigate('/user/hasilpencarian')}>
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Pesan Tiket" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/user/hasilpencarian')}>
+        <ListItem button onClick={() => navigate('/user/akun')}>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
