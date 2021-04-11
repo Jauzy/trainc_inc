@@ -3,19 +3,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const tutorialSteps = [
-    {
-        imgPath:
-        'https://cdn.discordapp.com/attachments/676020654360756254/824837608827650078/wallpaperflare.com_wallpaper.jpg',
-    },
     {
         imgPath:
         'https://www.pixel4k.com/wp-content/uploads/2018/09/train-railway-platform-wagon-4k_1538068776.jpg',
@@ -45,14 +38,6 @@ function SwipeableTextMobileStepper() {
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
     const maxSteps = tutorialSteps.length;
-
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
 
     const handleStepChange = (step) => {
         setActiveStep(step);

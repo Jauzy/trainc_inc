@@ -1,4 +1,6 @@
 import React from 'react';
+import {navigate} from 'gatsby'
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -26,18 +28,23 @@ const useStyles = makeStyles((theme) => ({
 export default function AddressForm(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        asal: '', tujuan: '', date: '', 
+        asal: '', tujuan: '',
     })
 
     const handleChange = (event, id) => {
         setState({...state, [id] : event.target.value});
     };
 
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
+
+    const onSubmit = () => {
+        if(state.asal != '' && state.tujuan != '' && selectedDate)
+            navigate(`/user/hasilpencarian?asal=${state.asal}&tujuan=${state.tujuan}&date=${selectedDate}`)
+    }
 
     return (
     <React.Fragment>
@@ -56,7 +63,7 @@ export default function AddressForm(props) {
                         required
                         >
                         {props.data?.map(item => (
-                            <MenuItem value={item.id}>{item.frontmatter.name}</MenuItem>
+                            <MenuItem value={item.frontmatter.name}>{item.frontmatter.name}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
@@ -71,7 +78,7 @@ export default function AddressForm(props) {
                         required
                         >
                         {props.data?.map(item => (
-                            <MenuItem value={item.id}>{item.frontmatter.name}</MenuItem>
+                            <MenuItem value={item.frontmatter.name}>{item.frontmatter.name}</MenuItem>
                         ))}
                     </Select>
                 </FormControl>
@@ -91,9 +98,12 @@ export default function AddressForm(props) {
                     />
             </Grid>
             <Grid item xs={12} sm={3} style={{display:"flex", alignItems:'center', justifyContent:'center'}}>
-                <Button variant="contained" color="primary" fullWidth size='large'>Cari Kereta</Button>
+                <Button variant="contained" color="primary" fullWidth size='large' onClick={onSubmit}>Cari Kereta</Button>
             </Grid>
         </Grid>
+        <Typography variant='caption' color='textSecondary'>
+            Harap isikan tanggal pemesanan, jika tidak maka tiket akan dipesan untuk hari ini!.
+        </Typography>
         </Paper>
     </React.Fragment>
     );

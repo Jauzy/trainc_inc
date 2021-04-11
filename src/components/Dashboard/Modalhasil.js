@@ -2,20 +2,21 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import CurrencyFormat from 'react-currency-format';
+import { connect } from 'react-redux'
+import { order_ticket } from '../../../static/utils/redux/Actions/user'
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper'
 
+import ShopIcon from '@material-ui/icons/Shop';
 
-export default function Wallet() {
+function Wallet({ dispatch, stations, trains, schedule, date }) {
     const [openDetail, setOpenDetail] = React.useState(false);
     const [state, setState] = React.useState({
 
     })
-
     const handleClickHasilOpen = () => {
         setOpenDetail(true);
     };
@@ -24,64 +25,138 @@ export default function Wallet() {
         setOpenDetail(false);
     };
 
-    const handleError = err => {
-        console.error(err)
+    const onSubmit = () => {
+        const payload = {
+            price: schedule?.frontmatter.price,
+            schedule: schedule,
+            order_for_date: date
+        }
+        order_ticket(dispatch, payload)
+        handleHasilClose()
     }
+
+    React.useEffect(() => {
+        setState({
+            train: trains?.filter(item => (item.frontmatter.name == schedule.frontmatter.train))[0],
+            depart: stations?.filter(item => (item.frontmatter.name == schedule.frontmatter.depart_station))[0],
+            destination: stations?.filter(item => (item.frontmatter.name == schedule.frontmatter.destination_station))[0]
+        })
+    }, [stations, trains, schedule])
 
     return (
         <div>
-            <Paper variant="outlined" style={{padding:'2em', margin:'1em'}}>
-                <Grid container>
-                    <Grid item xs={4}>
-                        <Grid>
-                            <Grid>
-                                Kereta
-                            </Grid>
-                            <Grid>
-                                Kelas
-                            </Grid>
-                        </Grid>
+            <Paper variant="outlined" style={{ padding: '2em', margin: '1em' }}>
+                <Grid container spacing={3}>
+                    <Grid item xs={2}>
+                        <Typography variant='caption'>
+                            Kereta
+                        </Typography>
+                        <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                            {state.train?.frontmatter.name}
+                        </Typography>
                     </Grid>
-                    <Grid item xs={4} >
-                        <Grid>
-                            Waktu Berangkat : xx:xx
-                        </Grid>
+                    <Grid item xs={2}>
+                        <Typography variant='caption'>
+                            Kelas
+                        </Typography>
+                        <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                            {state.train?.frontmatter.class}
+                        </Typography>
                     </Grid>
-                    <Grid item xs={3} style={{textAlign:'center'}}>
-                        <Grid>
-                            Harga : Rp.xxxxx
-                        </Grid>
+                    <Grid item xs={2} >
+                        <Typography variant='caption'>
+                            Waktu Berangkat
+                        </Typography>
+                        <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                            {schedule?.frontmatter.depart_day}, {schedule?.frontmatter.time}
+                        </Typography>
                     </Grid>
-                    <Grid item xs={1}>
-                        <Grid>
-                            <Button variant="contained" color="primary" onClick={() => handleClickHasilOpen()}>
-                                Detail
-                            </Button>
-                        </Grid>
+                    <Grid item xs={2}>
+                        <Typography variant='caption'>
+                            Harga Tiket Per 1 Orang
+                        </Typography>
+                        <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                            <CurrencyFormat value={schedule?.frontmatter.price || 0} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} />
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={3} >
+                        <Typography variant='caption'>
+                            Stasiun Keberangkatan - Stasiun Tujuan
+                        </Typography>
+                        <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                            {schedule?.frontmatter.depart_station} - {schedule?.frontmatter.destination_station}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1} style={{ display: 'flex' }}>
+                        <Button fullWidth variant="contained" style={{ margin: 'auto' }} color="primary" onClick={() => handleClickHasilOpen()}>
+                            <ShopIcon />
+                        </Button>
                     </Grid>
                 </Grid>
             </Paper>
-        
+
             <Dialog
                 open={openDetail}
                 onClose={handleHasilClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                maxWidth="lg"
+                maxWidth="lg" fullWidth
             >
-                <DialogTitle id="alert-dialog-title">{"Detail Jadwal"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Lokasi Stasiun
-                        </DialogContentText>
-                        <div style={{margin:'3em 0'} }>
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.27557841691!2d106.82624076534091!3d-6.227351445492155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3fab4ca372b%3A0xd239914cb95eda76!2sRT.5%2FRW.2%2C%20Kuningan%2C%20Kuningan%20Tim.%2C%20Kecamatan%20Setiabudi%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1616858141350!5m2!1sid!2sid" width="600" height="450" allowfullscreen="" loading="lazy"></iframe>
-                        </div>
-                        <Button variant="contained" color="primary" fullWidth>
-                            Pesan
-                        </Button>
-                    </DialogContent>
+                <DialogContent>
+                    <Grid container spacing={3} style={{ textAlign: 'center' }}>
+                        <Grid item xs={2}>
+                            <Typography variant='caption'>
+                                Kereta
+                            </Typography>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                                {state.train?.frontmatter.name}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Typography variant='caption'>
+                                Kelas
+                        </Typography>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                                {state.train?.frontmatter.class}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={2} >
+                            <Typography variant='caption'>
+                                Waktu Berangkat
+                        </Typography>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                                {schedule?.frontmatter.depart_day}, {schedule?.frontmatter.time}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Typography variant='caption'>
+                                Harga Tiket Per 1 Orang
+                        </Typography>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                                <CurrencyFormat value={schedule?.frontmatter.price} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} />
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4} >
+                            <Typography variant='caption'>
+                                Stasiun Keberangkatan - Stasiun Tujuan
+                            </Typography>
+                            <Typography variant='h6' style={{ fontWeight: 'bold' }}>
+                                {schedule?.frontmatter.depart_station} - {schedule?.frontmatter.destination_station}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <div style={{ margin: '1em 0' }}>
+                        <iframe src={schedule?.frontmatter.src} width="100%" height="450" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <Button variant="contained" color="primary" onClick={onSubmit} fullWidth startIcon={<ShopIcon />} style={{ marginBottom: '1em' }}>
+                        Pesan Sekarang
+                    </Button>
+                </DialogContent>
             </Dialog>
         </div>
     );
 }
+
+export default connect(state => ({
+    user: state.user.user,
+}), null)(Wallet)

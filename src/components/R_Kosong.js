@@ -105,10 +105,8 @@ export default function AddressForm() {
             </Grid> */}
 
             <div style={{padding:'2em 0'}}>
-            <Advantages svg={R_SVG} />
+            <Advantages svg={R_SVG} disableParallax />
             </div>
-
-            
 
         </Grid>
         

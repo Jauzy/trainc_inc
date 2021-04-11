@@ -26,7 +26,7 @@ const IndexPage = () => {
       </div> */}
 
       <div style={{padding:'2em 0'}}>
-      <Advantages svg={R_SVG2} title1='Menampilkan Riwayat Pemesananmu' title2='Riwayat Pemesanan' />
+      <Advantages svg={R_SVG2} title1='Menampilkan Riwayat Pemesananmu' title2='Riwayat Pemesanan' disableParallax />
       </div>
 
       <div style={{padding:'0em 5vw', marginBottom:'3em'}}>

@@ -5,8 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ReactToPrint from 'react-to-print';
 import GetAppIcon from '@material-ui/icons/GetApp';
-
-var QRCode = require('qrcode.react');
+import QRCode from "react-qr-code";
 
 const Component = ({ item }) => {
     const ref = React.useRef()
@@ -15,13 +14,12 @@ const Component = ({ item }) => {
             <ReactToPrint
                 trigger={() => <Button color='primary' variant='contained' style={{ marginBottom: '-4em' }}><GetAppIcon /></Button>}
                 content={() => {
-                    console.log(ref)
                     return ref.current
                 }}
             />
             <Paper elevation={3} ref={ref} style={{ padding: '2em', borderRadius: '5px', background: '#fff', maxWidth:'350px' }}>
                 <center>
-                    <QRCode value={item.frontmatter.nominal} imageSettings={{ width: '100%' }} />
+                    <QRCode value={item.frontmatter.nominal.toString()} />
                     <Typography variant='h5' style={{ color: "#000", marginTop: '1em', fontWeight: 'bold' }}>
                         {item.frontmatter.name}
                     </Typography>

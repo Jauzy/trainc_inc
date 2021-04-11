@@ -8,8 +8,9 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItemsAdmin'
+import SecondaryListItems, { mainListItems } from './listItemsAdmin'
 import { createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import Footer from '../Footer'
 
 import Navbar from '../Navbar'
 import { useRecoilValue } from 'recoil'
@@ -80,10 +81,11 @@ export default function Dashboard(props) {
             <div className={classes.root}>
                 <CssBaseline />
                 <div style={{ width: '100%' }}>
-                    <Navbar />
+                    <Navbar isInDashboard/>
                     <main className={classes.content} style={{paddingLeft:'5em', ...props.style}}>
                         {props.children}
                     </main>
+                    <Footer/>
                 </div>
                 <Drawer
                     variant="permanent"
@@ -100,7 +102,9 @@ export default function Dashboard(props) {
                     <Divider />
                     <List>{mainListItems}</List>
                     <Divider />
-                    <List>{secondaryListItems}</List>
+                    <List>
+                        <SecondaryListItems />
+                    </List>
                 </Drawer>
             </div>
         </ThemeProvider>

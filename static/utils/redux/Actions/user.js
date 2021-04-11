@@ -150,3 +150,51 @@ export const logout = (dispatch) => {
     dispatch(reset())
     navigate('/login')
 }
+
+export const topup = (dispatch, amount) => {
+    dispatch(enableLoading())
+    try {
+        const userRef = firebaseDb.ref('users')
+        userRef.child(firebaseAuth.currentUser?.uid).get().then(result => {
+            if (result.val()) {
+                let budget = result.val().budget + amount
+                let historyTopUp = result.val().historyTopUp
+                if (!historyTopUp)
+                    historyTopUp = []
+                historyTopUp.push({date: (new Date()).toDateString(), nominal: amount})
+                userRef.child(firebaseAuth.currentUser?.uid).set({
+                    ...result.val(), budget, historyTopUp
+                });
+                dispatch(finishReq({ user: {...result.val(), budget} }))
+            }
+        })
+    } catch (error) {
+        dispatch(finishReq(error))
+    }
+}
+
+export const order_ticket = (dispatch, payload) => {
+    dispatch(enableLoading())
+    try {
+        const userRef = firebaseDb.ref('users')
+        userRef.child(firebaseAuth.currentUser?.uid).get().then(result => {
+            if (result.val()) {
+                let budget = result.val().budget - payload.price
+                let historyOrder = result.val().historyOrder
+                if (!historyOrder)
+                    historyOrder = []
+                let order_for_date = new Date()
+                if(payload.order_for_date)
+                    order_for_date = payload.order_for_date
+                historyOrder.push({...payload, order_for_date, order_date: (new Date()).toDateString()})
+                userRef.child(firebaseAuth.currentUser?.uid).set({
+                    ...result.val(), budget, historyOrder
+                });
+                dispatch(finishReq({ user: {...result.val(), budget} }))
+                navigate('/user/riwayat')
+            }
+        })
+    } catch (error) {
+        dispatch(finishReq(error))
+    }
+}

@@ -27,7 +27,7 @@ import logoLight from "../images/logo-light.png"
 
 const cookies = new Cookies()
 
-const Navbar = ({ dispatch, user, children, position, className }) => {
+const Navbar = ({ dispatch, user, children, position, className, isInDashboard }) => {
     const classes = useStyles();
     const section = [{ name: 'Login', uri: '/login' }]
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
@@ -60,11 +60,11 @@ const Navbar = ({ dispatch, user, children, position, className }) => {
                             }>
                                 {user.name}
                             </Button>
-                            <Tooltip style={{ marginLeft: '0em' }} title='Logout'>
+                            {!isInDashboard && <Tooltip style={{ marginLeft: '0em' }} title='Logout'>
                                 <IconButton color="inherit" onClick={logout}>
                                     <ExitToAppIcon />
                                 </IconButton>
-                            </Tooltip>
+                            </Tooltip>}
                         </div> : <div>
                             {section.map(item => (
                                 <Typography variant="subtitle1" key={item} style={{ margin: '0 .5em', fontWeight: 'bold' }}>
@@ -73,11 +73,11 @@ const Navbar = ({ dispatch, user, children, position, className }) => {
                                 </Typography>
                             ))}
                         </div>}
-                        <Tooltip style={{ marginLeft: '0em' }} title='Toggle Light/Dark Theme'>
+                        {!isInDashboard && <Tooltip style={{ marginLeft: '0em' }} title='Toggle Light/Dark Theme'>
                             <IconButton color="inherit" onClick={handleToggleTheme}>
                                 {!darkMode ? <LightIcon /> : <DarkIcon />}
                             </IconButton>
-                        </Tooltip>
+                        </Tooltip>}
                     </Toolbar>
                 </Container>
             </AppBar>

@@ -3,25 +3,26 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import QrReader from 'react-qr-reader'
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import CurrencyFormat from 'react-currency-format';
 
 import Layout from '../../components/Dashboard/Dashboard'
 import TableVoucherUser from '../../components/Dashboard/TableVoucherUser'
 import SEO from '../../components/Seo'
 
+import { connect } from 'react-redux'
+
 import image from '../../images/wallet.svg'
 
-export default function Wallet() {
+import ModalWallet from '../../components/ModalWallet'
+
+function Wallet({user}) {
+  const [state, setState] = React.useState({
+      budget : 0
+  })
   const [open, setOpen] = React.useState(false);
   const [openDetail, setOpenDetail] = React.useState(false);
-  const [state, setState] = React.useState({
-
-  })
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,20 +37,12 @@ export default function Wallet() {
   };
 
   const handleDetailClose = () => {
-    setOpenDetail(false);
+      setOpenDetail(false);
   };
-  const handleScan = data => {
-    if (data) {
-      setState({
-        result: data
-      })
-      alert(data)
-      handleClose()
-    }
-  }
-  const handleError = err => {
-    console.error(err)
-  }
+
+  React.useEffect(() => {
+      setState({ ...state, budget: user?.budget })
+  }, [])
 
   return (
     <Layout>
@@ -65,7 +58,7 @@ export default function Wallet() {
               Saldo Anda
             </Typography>
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Rp.50.000
+              <CurrencyFormat value={user?.budget || 0} displayType={'text'} thousandSeparator={true} prefix={'Rp.'} />
             </Typography>
             <Grid container spacing={2} justify="center">
               <Grid item>
@@ -87,43 +80,29 @@ export default function Wallet() {
           </div>
         </Grid>
       </Grid>
+      <ModalWallet open={open} handleClose={handleClose} state={state} setState={setState} />
       <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+          open={openDetail}
+          onClose={handleDetailClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth="lg"
       >
-        <DialogTitle id="alert-dialog-title">{"Izinkan akses Kamera device Anda?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Nyalakan kamera dan arahkan ke kode QR untuk melakukan pembayaran.
-          </DialogContentText>
-          <QrReader
-            delay={300}
-            onError={handleError}
-            onScan={handleScan}
-            style={{ width: '100%' }}
-          />
-        </DialogContent>
-      </Dialog>
-      <Dialog
-        open={openDetail}
-        onClose={handleDetailClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth="lg"
-      >
-        <DialogContent>
-            <div style={{margin:'3em 0', width:'700px'} }>
-                
-                <Typography variant='h5' gutterBottom style={{fontWeight:'bold'}}>
-                    History Top Up
-                </Typography>
-                <TableVoucherUser />
-              
-            </div>
-        </DialogContent>
+          <DialogContent>
+              <div style={{ margin: '3em 0', width: '700px' }}>
+
+                  <Typography variant='h5' gutterBottom style={{ fontWeight: 'bold' }}>
+                      History Top Up
+          </Typography>
+                  <TableVoucherUser />
+
+              </div>
+          </DialogContent>
       </Dialog>
     </Layout>
   );
 }
+
+export default connect(state => ({
+  user: state.user.user,
+}), null)(Wallet)
