@@ -3,16 +3,16 @@ import { DataGrid } from '@material-ui/data-grid';
 
 const columns = [
     { field: 'top_up_date', headerName: 'Tanggal Top Up', width: 300 },
-    { field: 'price', headerName: 'Nominal', width: 200 },
+    { field: 'price', headerName: 'Nominal', width: 150 },
 ];
 
-function createData(id, top_up_date, price, tiket, jadwal) {
-    return { id, top_up_date, price, tiket, jadwal };
+function createData(id, top_up_date, price) {
+    return { id, top_up_date, price};
 }
 
 const rows = [
     createData(1, (new Date()).toLocaleDateString(), 'Rp.20.000'),
-    createData(2, (new Date()).toLocaleDateString(), 'Rp.20.000', '2 Tiket'),
+    createData(2, (new Date()).toLocaleDateString(), 'Rp.20.000'),
     createData(3, (new Date()).toLocaleDateString(), 'Rp.20.000'),
     createData(4, (new Date()).toLocaleDateString(), 'Rp.20.000'),
 ];

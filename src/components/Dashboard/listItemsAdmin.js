@@ -10,6 +10,8 @@ import EventIcon from '@material-ui/icons/Event';
 import TrainIcon from '@material-ui/icons/Train';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import PersonIcon from '@material-ui/icons/Person';
 
 export const mainListItems = (
     <div style={{marginLeft:'.5em'}}>
@@ -19,7 +21,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/admin')}>
+        <ListItem button onClick={() => window.open('/admin/#')}>
             <ListItemIcon>
                 <StorageIcon />
             </ListItemIcon>
@@ -53,6 +55,18 @@ export const secondaryListItems = (
                 <EventIcon />
             </ListItemIcon>
             <ListItemText primary="Jadwal" />
+        </ListItem>
+        <ListItem button onClick={() => navigate('/admin/users')}>
+            <ListItemIcon>
+                <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="User" />
+        </ListItem>
+        <ListItem button onClick={() => navigate('/admin/admins')}>
+            <ListItemIcon>
+                <AssignmentIndIcon />
+            </ListItemIcon>
+            <ListItemText primary="Admin" />
         </ListItem>
     </div>
 );

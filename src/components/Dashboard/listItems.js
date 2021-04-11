@@ -14,7 +14,7 @@ import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 export const mainListItems = (
     <div style={{marginLeft:'.5em'}}>
-        <ListItem button onClick={() => navigate('/user')}>
+        <ListItem button onClick={() => navigate('/user/dashboard')}>
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
@@ -31,12 +31,6 @@ export const mainListItems = (
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Akun" />
-        </ListItem>
-        <ListItem button onClick={() => navigate('/user/settings')}>
-            <ListItemIcon>
-                <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Pengaturan" />
         </ListItem>
         <ListItem button onClick={() => navigate('/user/wallet')}>
             <ListItemIcon>
