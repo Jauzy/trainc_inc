@@ -18,7 +18,7 @@ const IndexPage = () => {
   return(
     <Layout>
       <SEO title='Home' />
-            <Header image={'https://images.hdqwalls.com/wallpapers/train-anime-art-4k-yp.jpg'} 
+            <Header image={'https://images.unsplash.com/photo-1454496406107-dc34337da8d6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=863&q=80'} 
                 blur={0} />
       
       {/* <div style={{padding:'2em 0'}}>

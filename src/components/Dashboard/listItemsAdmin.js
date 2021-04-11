@@ -11,6 +11,8 @@ import EventIcon from '@material-ui/icons/Event';
 import TrainIcon from '@material-ui/icons/Train';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import PersonIcon from '@material-ui/icons/Person';
 
 import Divider from '@material-ui/core/Divider'
 
@@ -31,7 +33,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
         </ListItem>
-        <ListItem button onClick={() => navigate('/admin')}>
+        <ListItem button onClick={() => window.open('/admin/#')}>
             <ListItemIcon>
                 <StorageIcon />
             </ListItemIcon>
@@ -76,6 +78,18 @@ export const Component = ({dispatch}) => {
             </ListItemIcon>
             <ListItemText primary="Jadwal" />
         </ListItem>
+        <ListItem button onClick={() => navigate('/admin/users')}>
+            <ListItemIcon>
+                <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="User" />
+        </ListItem>
+        <ListItem button onClick={() => navigate('/admin/admins')}>
+            <ListItemIcon>
+                <AssignmentIndIcon />
+            </ListItemIcon>
+            <ListItemText primary="Admin" />
+        </ListItem>
         <Divider/>
         <ListItem button onClick={handleToggleTheme}>
             <ListItemIcon>
@@ -87,7 +101,7 @@ export const Component = ({dispatch}) => {
             <ListItemIcon>
                 <ExitToAppIcon />
             </ListItemIcon>
-            <ListItemText primary="Logout" />
+        <ListItemText primary="Logout" />
         </ListItem>
     </div>
 )}
