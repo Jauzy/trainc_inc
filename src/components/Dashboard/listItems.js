@@ -34,7 +34,7 @@ const Component = ({dispatch}) => {
     }
     return(
     <div style={{marginLeft:'.5em'}}>
-        <ListItem button onClick={() => navigate('/user/dashboard')}>
+        <ListItem button onClick={() => navigate('/user')}>
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
