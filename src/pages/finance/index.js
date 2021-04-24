@@ -59,34 +59,43 @@ const Dashboard = (props) => {
     
     React.useEffect(() => {
         if (props.transaksi && props.topup){
-            let totalTransaksi = {}
-            
+            let totalTransaksi = []
+            let keyTransaksi = []
             props.transaksi?.map(item => {
-                if (!totalTransaksi[moment.utc(new Date(item.tanggal))]){
-                    totalTransaksi[moment.utc(new Date(item.tanggal))] = item.harga
+                if (!totalTransaksi[(new Date(item.tanggal)).toLocaleDateString()]){
+                    keyTransaksi.push((new Date(item.tanggal)).toLocaleDateString())
+                    totalTransaksi[(new Date(item.tanggal)).toLocaleDateString()] = item.harga
                 } else {
-                    totalTransaksi[moment.utc(new Date(item.tanggal))] += item.harga 
+                    totalTransaksi[(new Date(item.tanggal)).toLocaleDateString()] += item.harga 
                 }
             })
-
+            let totalTopup = []
+            let keyTopup = []
+            props.topup?.map(item => {
+                if (!totalTopup[(new Date(item.tanggal)).toLocaleDateString()]){
+                    keyTopup.push((new Date(item.tanggal)).toLocaleDateString())
+                    totalTopup[(new Date(item.tanggal)).toLocaleDateString()] = item.nominal
+                } else {
+                    totalTopup[(new Date(item.tanggal)).toLocaleDateString()] += item.nominal 
+                }
+            })
             setData([
                     {
                         label: 'Penjualan Tiket',
-                        // data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 19000]]
-                        data : totalTransaksi.map(item => {
+                        data : keyTransaksi.map(item => {
+                            return [moment.utc(new Date(item)), totalTransaksi[item]]
                         })
                     },
                     {
                         label: 'Top Up Voucher',
-                        // data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 30000]]
-                        data : props.topup?.map(item => {
-                            return ([moment.utc(new Date(item.tanggal)),item.nominal])
+                        data : keyTopup.map(item => {
+                            return [moment.utc(new Date(item)), totalTopup[item]]
                         })
                     },
                 ]
             )
         }
-    },[props.transaksi,props.topup])
+    },[props.transaksi, props.topup])
 
     return (
         <Layout style={{overflowX:'hidden', margin:'3em 0'}}>
