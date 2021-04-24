@@ -45,7 +45,7 @@ const Component = props => {
         <Layout>
             <SEO title='admins' />
             <Container>
-                <Typography align='center' variant='h2' gutterBottom style={{ fontWeight: 'bold' }}>
+                <Typography align='center' variant='h2' gutterBottom style={{ fontWeight: 'bold', marginTop:'1em' }}>
                     List Admin
                 </Typography>
                 

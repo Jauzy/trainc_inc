@@ -7,7 +7,7 @@ import { get_topup_data } from '../../static/utils/redux/Actions/user'
 const columns = [
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'name', headerName: 'Nama', width: 300 },
-    { field: 'top_up_date', headerName: 'Tanggal Top Up', width: 150 },
+    { field: 'top_up_date', headerName: 'Tanggal Top Up', width: 300 },
     { field: 'price', headerName: 'Nominal', width: 200 },
 ];
 

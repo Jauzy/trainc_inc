@@ -18,7 +18,6 @@ function createData(id, name, email) {
     return { id, name, email};
 }
 
-
 const Component = props => {
     const [rows,setRows] = React.useState([])
 
@@ -40,11 +39,11 @@ const Component = props => {
             <Layout>
                 <SEO title='users' />
                 <Container>
-                    <Typography align='center' variant='h2' gutterBottom style={{ fontWeight: 'bold' }}>
+                    <Typography align='center' variant='h2' gutterBottom style={{ fontWeight: 'bold', marginTop:'1em' }}>
                         List User
                     </Typography>
-                    <div style={{ margin:'3em 0', height: 300, width: '100%'}}>
-                        <DataGrid rows={rows} columns={columns} pageSize={5} />
+                    <div style={{ margin:'3em 0', height: 500, width: '100%'}}>
+                        <DataGrid rows={rows} columns={columns} pageSize={10} />
                     </div>
                 </Container>
             </Layout>
