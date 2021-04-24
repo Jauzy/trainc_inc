@@ -15,23 +15,39 @@ import SEO from '../../components/Seo'
 import { isDarkMode } from '../../../static/atoms/utils'
 import { useRecoilState } from 'recoil'
 
+import { connect } from 'react-redux'
+
 const Dashboard = (props) => {
     const classes = useStyles();
     const [darkMode, setDarkMode] = useRecoilState(isDarkMode)
 
-    const data = React.useMemo(
-        () => [
-            {
-                label: 'Penjualan Tiket',
-                data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 19000]]
-            },
-            {
-                label: 'Top Up Voucher',
-                data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 30000]]
-            },
-        ],
-        []
-        )
+    const [data,setData] = React.useState([
+        {
+            label: 'Penjualan Tiket',
+            // data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 19000]]
+            data : []
+        },
+        {
+            label: 'Top Up Voucher',
+            data: []
+        },
+    ])
+    // const data = React.useMemo(
+    //     () => [
+    //         {
+    //             label: 'Penjualan Tiket',
+    //             // data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 19000]]
+    //             data : props.transaksi?.map(item => {
+    //                 return ([moment.utc(new Date(item.tanggal)),item.harga])
+    //             })
+    //         },
+    //         {
+    //             label: 'Top Up Voucher',
+    //             data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 30000]]
+    //         },
+    //     ],
+    //     []
+    //     )
 
     const axes = React.useMemo(
         () => [
@@ -40,6 +56,37 @@ const Dashboard = (props) => {
         ],
         []
     )
+    
+    React.useEffect(() => {
+        if (props.transaksi && props.topup){
+            let totalTransaksi = {}
+            
+            props.transaksi?.map(item => {
+                if (!totalTransaksi[moment.utc(new Date(item.tanggal))]){
+                    totalTransaksi[moment.utc(new Date(item.tanggal))] = item.harga
+                } else {
+                    totalTransaksi[moment.utc(new Date(item.tanggal))] += item.harga 
+                }
+            })
+
+            setData([
+                    {
+                        label: 'Penjualan Tiket',
+                        // data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 19000]]
+                        data : totalTransaksi.map(item => {
+                        })
+                    },
+                    {
+                        label: 'Top Up Voucher',
+                        // data: [[moment.utc(), 20000], [moment.utc("2021-03-20"), 30000]]
+                        data : props.topup?.map(item => {
+                            return ([moment.utc(new Date(item.tanggal)),item.nominal])
+                        })
+                    },
+                ]
+            )
+        }
+    },[props.transaksi,props.topup])
 
     return (
         <Layout style={{overflowX:'hidden', margin:'3em 0'}}>
@@ -91,7 +138,13 @@ const Dashboard = (props) => {
     )
 }
 
-export default Dashboard
+export default connect(state => ({
+    error: state.user.error,
+    isLoading: state.user.loading,
+    users: state.user.users,
+    topup: state.user.topup,
+    transaksi: state.user.transaksi
+}), null)(Dashboard)
 
 const useStyles = makeStyles((theme) => ({
     paper: {

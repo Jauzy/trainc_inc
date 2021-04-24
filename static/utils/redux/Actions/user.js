@@ -198,3 +198,106 @@ export const order_ticket = (dispatch, payload) => {
         dispatch(finishReq(error))
     }
 }
+
+export const get_user_data = (dispatch) => {
+    dispatch(enableLoading())
+    try{
+        const userRef = firebaseDb.ref('users')
+        userRef.get().then(result => {
+            function checkRole(user) {
+                return (user.role == 'user')
+            }
+            if (result.val()) {
+                dispatch(finishReq({ users: Object.values(result.val()).filter(checkRole)}))
+            }
+        })
+    } catch (error){
+        dispatch(finishReq(error))
+    }
+}
+
+export const get_admin_data = (dispatch) => {
+    dispatch(enableLoading())
+    try{
+        const userRef = firebaseDb.ref('users')
+        userRef.get().then(result => {
+            function checkRole(user) {
+                return (user.role == 'admin')
+            }
+            if (result.val()) {
+                dispatch(finishReq({ users: Object.values(result.val()).filter(checkRole)}))
+            }
+        })
+    } catch (error){
+        dispatch(finishReq(error))
+    }
+}
+
+export const get_penjualan_data = (dispatch) => {
+    dispatch(enableLoading())
+    try{
+        const userRef = firebaseDb.ref('users')
+        userRef.get().then(result => {
+
+            function checkRole(user) {
+                return (user.role == 'user')
+            }
+
+            let transaksi = []
+            function getTransaksi(user){
+                user.historyOrder?.map(item => {
+                    let jadwal = item.schedule.frontmatter
+                    transaksi.push({
+                        tanggal: item.order_date,
+                        nama: user.name,
+                        email: user.email,
+                        harga: item.price,
+                        jadwal: `${jadwal.depart_station} ke ${jadwal.destination_station} hari ${jadwal.depart_day} jam ${jadwal.time}`
+                    })
+                })
+            }
+            
+            let usertemp = Object.values(result.val()).filter(checkRole)
+            usertemp.map(getTransaksi)
+
+            if (result.val()) {
+                dispatch(finishReq({ transaksi }))
+            }
+        })
+    } catch (error){
+        dispatch(finishReq(error))
+    }
+}
+
+export const get_topup_data = (dispatch) => {
+    dispatch(enableLoading())
+    try{
+        const userRef = firebaseDb.ref('users')
+        userRef.get().then(result => {
+            function checkRole(user) {
+                return (user.role == 'user')
+            }
+
+            let topup = []
+            function getTopup(user){
+                user.historyTopUp?.map(item => {
+                    topup.push({
+                        tanggal: item.date,
+                        nama: user.name,
+                        email: user.email,
+                        nominal: item.nominal,
+                    })
+                })
+            }
+            
+            let usertemp = Object.values(result.val()).filter(checkRole)
+            usertemp.map(getTopup)
+
+            if (result.val()) {
+                dispatch(finishReq({ topup }))
+            }
+        })
+    } catch (error){
+        dispatch(finishReq(error))
+    }
+}

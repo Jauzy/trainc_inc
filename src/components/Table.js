@@ -1,31 +1,48 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 
+import { connect } from 'react-redux'
+import { get_penjualan_data } from '../../static/utils/redux/Actions/user'
+
 const columns = [
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'name', headerName: 'Nama', width: 300 },
-    { field: 'order_date', headerName: 'Tanggal Kirim', width: 150 },
+    { field: 'order_date', headerName: 'Tanggal Pesan', width: 150 },
     { field: 'price', headerName: 'Harga', width: 200 },
-    { field: 'tiket', headerName: 'Banyak Pesanan', width: 200 },
     { field: 'jadwal', headerName: 'Jadwal', width: 400 },
 ];
 
-function createData(id, email, name, order_date, price, tiket, jadwal) {
-    return { id, email, name, order_date, price, tiket, jadwal };
+function createData(id, email, name, order_date, price, jadwal) {
+    return { id, email, name, order_date, price, jadwal };
 }
 
-const rows = [
-    createData(1,'al.zaujy@gmail.com', 'Muhammad Abdurrahman Al Jauzy', (new Date()).toLocaleDateString(), 'Rp.20.000', '2 Tiket', 'Merak ke Bandung Hari Minggu Jam 09:30'),
-    createData(2,'dini_chan@gmail.com', 'Khalisyahdini', (new Date()).toLocaleDateString(), 'Rp.20.000', '2 Tiket', 'Merak ke Bandung Hari Minggu Jam 09:30'),
-    createData(3,'syafiq@gmail.com', 'Muhammad Syafiq Yukinanda', (new Date()).toLocaleDateString(), 'Rp.20.000', '2 Tiket', 'Merak ke Bandung Hari Minggu Jam 09:30'),
-    createData(4,'lyan@gmail.com', 'Khalifa Lyan Bohemianda', (new Date()).toLocaleDateString(), 'Rp.20.000', '2 Tiket', 'Merak ke Bandung Hari Minggu Jam 09:30'),
-];
+function DataTable(props) {
+    const [rows,setRows] = React.useState([])
 
-export default function DataTable() {
+    React.useEffect(() => {
+        get_penjualan_data(props.dispatch)
+    },[]) 
+
+    React.useEffect(() => {
+        if (props.transaksi){
+            function mapTransaksi(item,index) {
+                return (createData(index+1, item.email, item.nama, item.tanggal, item.harga, item.jadwal))
+            }
+            let row = props.transaksi.map(mapTransaksi)
+            setRows(row)
+        }
+    },[props.transaksi]) 
+
     return (
         <div style={{ height: 300, width: '100%'}}>
             <DataGrid rows={rows} columns={columns} pageSize={5} />
         </div>
     );
 }
+
+export default connect(state => ({
+    error: state.user.error,
+    isLoading: state.user.loading,
+    transaksi: state.user.transaksi
+}), null)(DataTable)
 
