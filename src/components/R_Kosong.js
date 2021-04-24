@@ -10,7 +10,7 @@ function AddressForm({user}) {
 
     return (
         <React.Fragment>
-            {!user ? <Paper style={{ padding: '2em' }}>
+            {!user.historyOrder ? <Paper style={{ padding: '2em' }}>
 
                 <Grid container spacing={3}>
                     <div style={{ padding: '2em 0' }}>
@@ -32,7 +32,7 @@ function AddressForm({user}) {
 
             </Paper> : 
                 <Paper style={{ padding: '1em 2em' }}>
-                    {user?.historyOrder.map(item => (
+                    {user?.historyOrder?.map(item => (
                     <Paper elevation={3} style={{ background:'#3F51B5', color:'white', padding: '2em', borderRadius: '5px', width: '100%', margin: '1em 0' }}>
                         <Grid container spacing={3}>
                             <Grid item xs={3}>

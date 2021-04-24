@@ -40,6 +40,7 @@ export const registerNewUser = (dispatch, user, role) => {
         name: user.name,
         email: user.email,
         photoURL: defaultAvatar,
+        budget: 0,
         role
     });
     dispatch(finishReq())
@@ -48,13 +49,13 @@ export const registerNewUser = (dispatch, user, role) => {
 
 export const registerNewUserWithEmail = (dispatch, role) => {
     const userRef = firebaseDb.ref('users')
-    console.log(firebaseAuth.currentUser)
     userRef.child(firebaseAuth.currentUser?.uid).on('value', result => {
         if(!result.val()){
             userRef.child(firebaseAuth.currentUser?.uid).set({
                 name: firebaseAuth.currentUser?.displayName,
                 email: firebaseAuth.currentUser?.email,
                 photoURL: firebaseAuth.currentUser?.photoURL || defaultAvatar,
+                budget: 0,
                 role
             });
             registerNewUserWithEmail(dispatch, role)
@@ -137,7 +138,14 @@ export const getUserData = (dispatch) => {
         const token = cookies.get('user')
         const userRef = firebaseDb.ref('users')
         userRef.child(token.uid).on('value', result => {
-            dispatch(finishReq({ user: result.val() }))
+            let data = result.val()
+            if(!data?.historyOrder){
+                data = {...data, historyOrder: []}
+            }
+            if(!data?.historyTopUp){
+                data = {...data, historyTopUp: []}
+            }
+            dispatch(finishReq({ user: data }))
         })
     } catch (error) {
         dispatch(finishReq(error))
