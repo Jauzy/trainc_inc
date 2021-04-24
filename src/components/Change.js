@@ -3,54 +3,30 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper'
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
 import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-import Advantages from '../components/Advantages'
-import R_SVG from '../components/R_SVG'
+import {updateUserData} from '../../static/utils/redux/Actions/user'
+import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: '100%',
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-    root: {
-        flexGrow: 1,
-        '& > *': {
-            margin: theme.spacing(1),
-          },
-    },
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-}));
+function AddressForm({dispatch, user}) {
+    const [state, setState] = React.useState({
+        name: '', gender:'', alamat:'',birth_date: '', phone: ''
+    })
 
-export default function AddressForm() {
-    const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const onChange = e => {
+        setState({...state, [e.target.id] : e.target.value})
+    }
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+    const onSubmit = () => {
+        updateUserData(dispatch, {...state})
+    }
 
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+    React.useEffect(() => {
+        setState({...state, ...user})
+    }, [user])
 
     return (
     <React.Fragment>
@@ -63,82 +39,71 @@ export default function AddressForm() {
                 <div>
                     <TextField
                     required
-                    id="outlined-required"
-                    label="Nama Depan"
-                    defaultValue="Dini"
+                    id="name"
+                    label="Nama"
                     variant="outlined"
+                    value={state?.name}onChange={onChange}
                     fullWidth
                     />
                 </div>
-              
             </Grid> 
 
             <Grid item xs={4} >            
                 <div>
                     <TextField
                     required
-                    id="outlined-required"
-                    label="Nama Belakang"
-                    defaultValue="Chan"
+                    id="phone"
+                    label="Telepon"
                     variant="outlined"
+                    value={state?.phone}onChange={onChange}
                     fullWidth
                     />
                 </div>
-                
             </Grid> 
 
             <Grid item xs={4} >            
                 <div>
-                    <KeyboardDatePicker
+                    <TextField
+                    required
+                    id="alamat"
+                    label="Alamat"
+                    variant="outlined"
+                    value={state?.alamat}onChange={onChange}
+                    fullWidth
+                    />
+                </div>
+            </Grid> 
+
+            <Grid item xs={4} >            
+                <div>
+                    <TextField
+                    required
+                    id="gender"
+                    label="Jenis Kelamin"
+                    variant="outlined"
+                    value={state?.gender}onChange={onChange}
+                    fullWidth
+                    />
+                </div>
+            </Grid> 
+
+            <Grid item xs={4} >            
+                <div>
+                    <TextField
                         required
-                        id="date-picker-dialog"
+                        id="birth_date"
                         label="Tanggal Lahir"
-                        format="MM/dd/yyyy"
                         variant="outlined"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
+                        type='date'
+                        value={state?.birth_date} onChange={onChange}
                         fullWidth
                     />
                 </div>
-                
             </Grid> 
 
-            <Grid item xs={4} >            
-                <div>
-                    <TextField
-                    required
-                    id="outlined-required"
-                    label="Password"
-                    defaultValue="*******"
-                    variant="outlined"
-                    fullWidth
-                    />
-                </div>
-                
-            </Grid> 
-
-            <Grid item xs={4} >            
-                <div>
-                    <TextField
-                    required
-                    id="outlined-required"
-                    label="Telepon"
-                    defaultValue="08135966822"
-                    variant="outlined"
-                    fullWidth
-                    />
-                </div>
-            
-            </Grid> 
-            
-            
             <Grid item xs={4} style={{display:"flex", alignItems:'center', justifyContent:'stretch'}}>
-                <Button variant="contained" color="primary" fullWidth size='large' style={{margin:'0 1em'}}>Simpan</Button>
+                <Button variant="contained" onClick={onSubmit} color="primary" fullWidth size='large' style={{margin:'0 1em'}}>Simpan</Button>
                 <Button variant="contained"  fullWidth size='large'  style={{margin:'0 1em'}}>Batal</Button>
-                
             </Grid>
             
             </Grid>
@@ -146,3 +111,9 @@ export default function AddressForm() {
     </React.Fragment>
     );
 }
+
+export default connect(state => ({
+    error: state.user.error,
+    isLoading: state.user.loading,
+    user: state.user.user
+}), null)(AddressForm)

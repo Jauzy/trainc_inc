@@ -1,131 +1,83 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper'
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-import {
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
-
 import Advantages from '../components/Advantages'
 import R_SVG from '../components/R_SVG'
+import { connect } from 'react-redux'
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: '100%',
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2),
-    },
-}));
-
-export default function AddressForm() {
-    const classes = useStyles();
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
-
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
-    const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+function AddressForm({user}) {
 
     return (
-    <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-            (Rencananya ga ada tulisan ini)
-        </Typography>
-        <Paper style={{padding:'2em'}}>
-        <Grid container spacing={3}> 
-            {/* <Grid item xs={12} sm={3}>
-                <FormControl variant="filled" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-filled-label">Stasiun Asal</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={age}
-                        fullWidth
-                        onChange={handleChange}
-                        required
-                        >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-            <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel id="demo-simple-select-filled-label">Stasiun Tujuan</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={age}
-                        fullWidth
-                        onChange={handleChange}
-                        required
-                        >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-                    <KeyboardDatePicker
-                        margin="normal"
-                        id="date-picker-dialog"
-                        label="Tanggal Keberangkatan"
-                        format="MM/dd/yyyy"
-                        value={selectedDate}
-                        fullWidth
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-            </Grid>
-            <Grid item xs={12} sm={3} style={{display:"flex", alignItems:'center', justifyContent:'center'}}>
-                <Button variant="contained" color="primary" fullWidth size='large'>Cari Kereta</Button>
-            </Grid> */}
+        <React.Fragment>
+            {!user ? <Paper style={{ padding: '2em' }}>
 
-            <div style={{padding:'2em 0'}}>
-            <Advantages svg={R_SVG} disableParallax />
-            </div>
+                <Grid container spacing={3}>
+                    <div style={{ padding: '2em 0' }}>
+                        <Advantages svg={R_SVG} disableParallax />
+                    </div>
+                </Grid>
 
-        </Grid>
-        
-        <center>
-        <Typography variant="h6" gutterBottom >
-                Riwayat Pesanan Kosong
-        </Typography>
-        </center>
+                <center>
+                    <Typography variant="h6" gutterBottom >
+                        Riwayat Pesanan Kosong
+                    </Typography>
+                </center>
 
-        <center>
-        <Typography variant="h6" gutterBottom >
-                Pesanan yang sudah dipesan akan disimpan disini 
-        </Typography>
-        
-        </center>
+                <center>
+                    <Typography variant="h6" gutterBottom >
+                        Pesanan yang sudah dipesan akan disimpan disini
+                    </Typography>
+                </center>
 
-    
-
-        </Paper>
-    </React.Fragment>
+            </Paper> : 
+                <Paper style={{ padding: '1em 2em' }}>
+                    {user?.historyOrder.map(item => (
+                    <Paper elevation={3} style={{ background:'#3F51B5', color:'white', padding: '2em', borderRadius: '5px', width: '100%', margin: '1em 0' }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={3}>
+                                <Typography variant='caption' style={{ fontWeight: "bold" }}>
+                                    Keberangkatan
+                                </Typography>
+                                <Typography variant='h5' style={{ fontWeight: "bold" }}>
+                                    {item.schedule.frontmatter.depart_day} - {item.schedule.frontmatter.time}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Typography variant='caption' style={{ fontWeight: "bold" }}>
+                                    Asal / Tujuan
+                                </Typography>
+                                <Typography variant='h5' style={{ fontWeight: "bold" }}>
+                                    {item.schedule.frontmatter.depart_station} / {item.schedule.frontmatter.destination_station}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Typography variant='caption' style={{ fontWeight: "bold" }}>
+                                    Harga
+                                </Typography>
+                                <Typography variant='h5' style={{ fontWeight: "bold" }}>
+                                    {item.price}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Typography variant='caption' style={{ fontWeight: "bold" }}>
+                                    Tanggal Pesan
+                                </Typography>
+                                <Typography variant='h5' style={{ fontWeight: "bold" }}>
+                                    {item.order_date}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Paper>
+                    ))}
+                </Paper>
+            }
+        </React.Fragment>
     );
 }
+
+export default connect(state => ({
+    error: state.user.error,
+    isLoading: state.user.loading,
+    user: state.user.user
+}), null)(AddressForm)

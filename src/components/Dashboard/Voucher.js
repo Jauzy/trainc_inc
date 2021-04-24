@@ -19,7 +19,7 @@ const Component = ({ item }) => {
             />
             <Paper elevation={3} ref={ref} style={{ padding: '2em', borderRadius: '5px', background: '#fff', maxWidth:'350px' }}>
                 <center>
-                    <QRCode value={item.frontmatter.nominal.toString()} />
+                    {Blob && <QRCode value={item.frontmatter.nominal.toString()} />}
                     <Typography variant='h5' style={{ color: "#000", marginTop: '1em', fontWeight: 'bold' }}>
                         {item.frontmatter.name}
                     </Typography>

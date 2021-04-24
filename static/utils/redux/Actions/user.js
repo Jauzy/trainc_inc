@@ -68,11 +68,11 @@ export const registerNewUserWithEmail = (dispatch, role) => {
     })
 }
 
-export const updateUserData = (dispatch, { gender, date_of_birth, name }) => {
+export const updateUserData = (dispatch, { gender, birth_date, phone, alamat ,name }) => {
     dispatch(enableLoading())
     try {
         firebaseDb.ref(`users/${firebaseAuth.currentUser?.uid}`).update({
-            gender, date_of_birth, name
+            gender, birth_date, phone, alamat ,name
         })
         dispatch(finishReq())
     } catch (error) {
