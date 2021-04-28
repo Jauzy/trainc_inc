@@ -1,5 +1,6 @@
 import Cookies from 'universal-cookie';
 import { navigate } from 'gatsby'
+import swal from 'sweetalert';
 
 import { firebaseAuth, firebaseDb } from '../../Firebase'
 
@@ -188,18 +189,26 @@ export const order_ticket = (dispatch, payload) => {
         userRef.child(firebaseAuth.currentUser?.uid).get().then(result => {
             if (result.val()) {
                 let budget = result.val().budget - payload.price
-                let historyOrder = result.val().historyOrder
-                if (!historyOrder)
-                    historyOrder = []
-                let order_for_date = new Date()
-                if(payload.order_for_date)
-                    order_for_date = payload.order_for_date
-                historyOrder.push({...payload, order_for_date, order_date: (new Date()).toDateString()})
-                userRef.child(firebaseAuth.currentUser?.uid).set({
-                    ...result.val(), budget, historyOrder
-                });
-                dispatch(finishReq({ user: {...result.val(), budget} }))
-                navigate('/user/riwayat')
+                if(budget <= 0){
+                    swal("Good job!", "Transaksi Sukses", "success").then((value) => {
+                        dispatch(finishReq({}))
+                    });
+                }else {
+                    let historyOrder = result.val().historyOrder
+                    if (!historyOrder)
+                        historyOrder = []
+                    let order_for_date = new Date()
+                    if(payload.order_for_date)
+                        order_for_date = payload.order_for_date
+                    historyOrder.push({...payload, order_for_date, order_date: (new Date()).toDateString()})
+                    userRef.child(firebaseAuth.currentUser?.uid).set({
+                        ...result.val(), budget, historyOrder
+                    });
+                    dispatch(finishReq({ user: {...result.val(), historyOrder, budget} }))
+                    swal("Good job!", "Transaksi Sukses", "success").then((value) => {
+                        navigate('/user/riwayat')
+                    });
+                }
             }
         })
     } catch (error) {

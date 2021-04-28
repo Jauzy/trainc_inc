@@ -10,7 +10,7 @@ function AddressForm({user}) {
 
     return (
         <React.Fragment>
-            {!user.historyOrder ? <Paper style={{ padding: '2em' }}>
+            {!(user && user.historyOrder && user.historyOrder.length > 0) ? <Paper style={{ padding: '2em' }}>
 
                 <Grid container spacing={3}>
                     <div style={{ padding: '2em 0' }}>

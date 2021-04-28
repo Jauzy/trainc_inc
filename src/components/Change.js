@@ -3,13 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper'
-import {
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
 
 import {updateUserData} from '../../static/utils/redux/Actions/user'
 import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
+import Avatar from '@material-ui/core/Avatar'
 
 function AddressForm({dispatch, user}) {
     const [state, setState] = React.useState({
@@ -33,7 +31,8 @@ function AddressForm({dispatch, user}) {
         <Typography variant="h6" gutterBottom>
             Perubahan
         </Typography>
-        <Paper style={{padding:'2em'}}>
+        <Paper style={{padding:'2em', display:'flex', alignItems:'center'}}>
+            <Avatar src={user?.photoURL} style={{marginRight:'1em', width:'150px',height:'150px'}} />
             <Grid container spacing={3}>
             <Grid item xs={4}> 
                 <div>
