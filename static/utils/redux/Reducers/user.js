@@ -1,11 +1,23 @@
+/**
+* Module reducer untuk users
+* @module reducer/users
+*/
 import { LOADING, FINISH, RESET } from '../Actions/user'
 
+
+/**
+* Inisialisasi State
+*/
 const initialState = {
     user: null,
     loading: false
 };
 
 //reducer
+
+/**
+* Reducer
+*/
 export default (state = initialState, action) => {
     switch (action.type) {
         case LOADING:
